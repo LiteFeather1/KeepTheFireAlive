@@ -25,6 +25,7 @@ public class Player : MonoBehaviour
 
     private enum ActionInputState
     {
+        NearMaterial,
         NearATree,
         NearCampfire,
         NearCraftingTable
@@ -70,7 +71,7 @@ public class Player : MonoBehaviour
 
         Vector2 direction = new Vector2(xInput, yInput).normalized;
 
-        _rb.velocity = _speed * Time.deltaTime * direction;
+        _rb.velocity = _speed  * direction;
     }
 
     private void Inputs()
@@ -85,6 +86,7 @@ public class Player : MonoBehaviour
     {
         switch (_actionInputState)
         {
+
             case ActionInputState.NearATree:
                 SwingAxe();
                 break;

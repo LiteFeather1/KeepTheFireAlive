@@ -17,18 +17,25 @@ public class Player : MonoBehaviour
     [SerializeField] private bool _isProtected;
 
     [Header("Equipeables")]
-    [SerializeField] private ActionInputState _actionInputState;
+    [SerializeField] private InputStates _inputStates;
     [SerializeField] private PlayerAxe _playerAxe;
     [SerializeField] private PlayerHat _playerHat;
 
-    [SerializeField] private Rigidbody2D _rb;
+    [Header("Interactables")]
+    private MaterialItem _materialNear;
 
-    private enum ActionInputState
+    [Header("Components")]
+    [SerializeField] private Rigidbody2D _rb;
+    [SerializeField] private Collider2D _triggerCollider;
+    public static Player Instance { get; private set; }
+
+    private enum InputStates
     {
         NearMaterial,
         NearATree,
         NearCampfire,
-        NearCraftingTable
+        NearCraftingBench,
+        Nothing
     }
 
     private GameManager _gm;
@@ -41,10 +48,18 @@ public class Player : MonoBehaviour
         }
     }
 
+    private void Awake()
+    {
+        if (Instance == null)
+            Instance = this;
+        else
+            Destroy(gameObject);
+    }
+
     private void OnEnable()
     {
         _gm = GameManager.Instance;
-        _gm.RainStarted += StartRaining;    
+        _gm.RainStarted += StartRaining;
     }
 
     private void Start()
@@ -84,19 +99,30 @@ public class Player : MonoBehaviour
 
     private void InputAction()
     {
-        switch (_actionInputState)
+        switch (_inputStates)
         {
-
-            case ActionInputState.NearATree:
+            case InputStates.NearMaterial:
+                CollectMaterial();
+                break;
+            case InputStates.NearATree:
                 SwingAxe();
                 break;
-            case ActionInputState.NearCampfire:
+            case InputStates.NearCampfire:
                 break;
-            case ActionInputState.NearCraftingTable:
+            case InputStates.NearCraftingBench:
+                GameManager.Instance.Ui.SwitchCraftingMenuActive();
                 break;
             default:
                 break;
         }
+        _triggerCollider.enabled = false;
+        _triggerCollider.enabled = true;
+    }
+
+    private void CollectMaterial()
+    {
+        if (_materialNear != null)
+            _materialNear.Collect();
     }
 
     private void SwingAxe()
@@ -160,5 +186,25 @@ public class Player : MonoBehaviour
         float wetnessMultiplier = Mathf.Lerp(0, 2, _wetness / 100);
 
         _fireLife -= Time.deltaTime / _depleteRate * wetnessMultiplier;
+    }
+
+    private void OnTriggerEnter2D(Collider2D collision)
+    {
+        MaterialItem itemNear = collision.GetComponent<MaterialItem>();
+        if (itemNear)
+        {
+            _materialNear = itemNear;
+            _inputStates = InputStates.NearMaterial;
+        }
+        else if (collision.CompareTag("CraftingBench"))
+        {
+            _inputStates = InputStates.NearCraftingBench;
+        }
+    }
+
+    private void OnTriggerExit2D(Collider2D collision)
+    {
+        _inputStates = InputStates.Nothing;
+        _materialNear = null;
     }
 }

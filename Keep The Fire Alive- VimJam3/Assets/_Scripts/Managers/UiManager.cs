@@ -20,16 +20,21 @@ public class UiManager : MonoBehaviour
 
     private void Update()
     {
-        if (Input.GetKeyDown(KeyCode.C))
-        {
-            SwitchCraftingMenuActive();
-        }
+        if(Input.GetKeyDown(KeyCode.Escape))
+            if (_craftingScreen.activeInHierarchy)
+            {
+                SwitchCraftingMenuActive();
+            }
     }
 
     public void SwitchCraftingMenuActive()
     {
         bool active = _craftingScreen.activeInHierarchy;
         _craftingScreen.SetActive(!active);
+        if (!active)
+            Time.timeScale = 0;
+        else
+            Time.timeScale = 1;
     }
 
     public void ActivatePopUpWindow(RectTransform target, Materials[] materialsToShow, int[] amountNeeded, string description)

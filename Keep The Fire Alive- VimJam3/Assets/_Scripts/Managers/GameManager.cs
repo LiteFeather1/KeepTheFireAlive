@@ -82,8 +82,15 @@ public class GameManager : MonoBehaviour
         {
             _spawnPassingTime = 0;
             _timeToSpawn = UnityEngine.Random.Range(_minTimeToSpawn, _maxTimeToSpawn);
-            int whatToSpawn = UnityEngine.Random.Range(0, _materials.Length - 1);
-            float xPosition = (-_cam.orthographicSize  * _cam.aspect) - 2 + UnityEngine.Random.Range(0,1f);
+            int whatToSpawn = UnityEngine.Random.Range(0, 100);
+            if (whatToSpawn <= 25)
+                whatToSpawn = 2;
+            else if (whatToSpawn <= 50)
+                whatToSpawn = 1;
+            else if (whatToSpawn <= 100)
+                whatToSpawn = 0;
+
+            float xPosition = (-_cam.orthographicSize * _cam.aspect) - 2 + UnityEngine.Random.Range(0, 1f);
             float yPosition = UnityEngine.Random.Range(-_cam.orthographicSize +0.2f, _cam.orthographicSize- 0.2f);
             Instantiate(_materials[whatToSpawn], new Vector2(xPosition, yPosition), Quaternion.identity);
         }

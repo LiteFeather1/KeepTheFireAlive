@@ -103,7 +103,7 @@ public class CraftingManager : MonoBehaviour
 
     public GameObject CraftObject()
     {
-        Instantiate(_itemToCraft, _itemToPlaceLocation.position, Quaternion.identity);
+        Instantiate(_itemToCraftHorizontal, _itemToPlaceLocation.position, Quaternion.identity);
         _spawnAction?.Invoke();
         _spawnAction = null;
         DeactivatePlacementBoxes();

@@ -154,7 +154,7 @@ public class Campfire : MonoBehaviour
         //_bigLight.pointLightOuterRadius = _bigRadiousPerState[(int)_fireState];
         _timePassed += Time.deltaTime * 1f * _rate;
         _bigLight.pointLightOuterRadius = Mathf.Lerp(_minBigRadiousPerState[(int)_fireState], _bigRadiousPerState[(int)_fireState],Mathf.PingPong(_timePassed,1));
-        _smallLight.pointLightOuterRadius = Mathf.Lerp(_minSmallRadiousPerState[(int)_fireState], _smallRadiousPerState[(int)_fireState], Mathf.PingPong(_timePassed, 1));
+        _smallLight.pointLightOuterRadius = Mathf.Lerp(_minSmallRadiousPerState[(int)_fireState], _smallRadiousPerState[(int)_fireState], Mathf.PingPong(_timePassed * 2, 1));
         _rate = Mathf.Sin(Time.time);
     }
 

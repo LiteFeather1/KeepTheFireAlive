@@ -1,0 +1,24 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d607b2527154f1349b3ad17e543d9463, type: 3}
+  m_Name: CampFire_Small
+  m_EditorClassIdentifier: 
+  _sprites:
+  - {fileID: 1030767844, guid: a5b381587a840364cab90cb5e4ae5156, type: 3}
+  - {fileID: -2066673001, guid: a5b381587a840364cab90cb5e4ae5156, type: 3}
+  - {fileID: -939300138, guid: a5b381587a840364cab90cb5e4ae5156, type: 3}
+  - {fileID: -1256469325, guid: a5b381587a840364cab90cb5e4ae5156, type: 3}
+  - {fileID: -444816435, guid: a5b381587a840364cab90cb5e4ae5156, type: 3}
+  - {fileID: 1216933920, guid: a5b381587a840364cab90cb5e4ae5156, type: 3}
+  - {fileID: -449055442, guid: a5b381587a840364cab90cb5e4ae5156, type: 3}
+  - {fileID: 1727932008, guid: a5b381587a840364cab90cb5e4ae5156, type: 3}
+  _fps: 8

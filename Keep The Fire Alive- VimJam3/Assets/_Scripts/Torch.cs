@@ -16,7 +16,7 @@ public class Torch : MonoBehaviour
         if(hand != null)
         {
             _hits++;
-            _collider.radius = _colliderRadious[_hits];
+            _collider.radius = _colliderRadious[_hits-1];
             _light.SetStage(_hits);
             Destroy(hand.gameObject);
             if (_hits == _hitsToDie)

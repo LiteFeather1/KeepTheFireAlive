@@ -4,40 +4,40 @@ using UnityEngine;
 
 public class PlacementBox : MonoBehaviour
 {
-    private CraftingManager _craftingManager;
-    private GameObject _myObject;
-    [SerializeField] private Collider2D _collider;
-    [SerializeField] private SpriteRenderer _sr;
+    protected CraftingManager _craftingManager;
+    protected GameObject _myObject;
+    [SerializeField] protected Collider2D _collider;
+    [SerializeField] protected SpriteRenderer _sr;
 
-    private void OnEnable()
+    protected void OnEnable()
     {
         if (_myObject == null)
             SetComponents(true);
     }
 
-    private void Start()
+    protected void Start()
     {
         _craftingManager = GameManager.Instance.CraftingManager;
     }
 
-    private void OnMouseEnter()
+    protected virtual void OnMouseEnter()
     {
         _craftingManager?.SetSpriteVisiable(transform);
     }
 
-    private void OnMouseExit()
+    protected void OnMouseExit()
     {
         _craftingManager?.SetSpriteInvisiable();
     }
 
-    private void OnMouseDown()
+    protected void OnMouseDown()
     {
         _myObject = _craftingManager?.CraftObject();
         if (_myObject != null)
             SetComponents(false);
     }
 
-    private void SetComponents(bool active)
+    protected void SetComponents(bool active)
     {
         _collider.enabled = active;
         _sr.enabled = active;

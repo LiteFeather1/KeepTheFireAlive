@@ -1,0 +1,24 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d607b2527154f1349b3ad17e543d9463, type: 3}
+  m_Name: Campfire_Medium
+  m_EditorClassIdentifier: 
+  _sprites:
+  - {fileID: 160162409, guid: a5801c7fc8d80754f90454a22b5cd37f, type: 3}
+  - {fileID: 581596986, guid: a5801c7fc8d80754f90454a22b5cd37f, type: 3}
+  - {fileID: 1973682895, guid: a5801c7fc8d80754f90454a22b5cd37f, type: 3}
+  - {fileID: 173783608, guid: a5801c7fc8d80754f90454a22b5cd37f, type: 3}
+  - {fileID: 299638046, guid: a5801c7fc8d80754f90454a22b5cd37f, type: 3}
+  - {fileID: -830525238, guid: a5801c7fc8d80754f90454a22b5cd37f, type: 3}
+  - {fileID: 179807371, guid: a5801c7fc8d80754f90454a22b5cd37f, type: 3}
+  - {fileID: 1956947500, guid: a5801c7fc8d80754f90454a22b5cd37f, type: 3}
+  _fps: 8

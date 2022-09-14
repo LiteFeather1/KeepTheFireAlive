@@ -15,7 +15,7 @@ public class Ice : MonoBehaviour
         _campFirePos = Campfire.Instance.transform.position;
         Vector2 direction = (Vector2)transform.position - _campFirePos;
         if (Mathf.Sign(direction.x) > 0)
-            transform.localScale = new Vector3(transform.localScale.x * -1, 1, 0);
+            transform.localScale = new Vector3(transform.localScale.x * -1, .32f, 0);
     }
 
     private void FixedUpdate()

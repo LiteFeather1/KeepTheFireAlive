@@ -1,0 +1,24 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d607b2527154f1349b3ad17e543d9463, type: 3}
+  m_Name: CampFireAlmostDead
+  m_EditorClassIdentifier: 
+  _sprites:
+  - {fileID: 913629604, guid: 2aa773875d6cf5547b55e6c8cd9aed06, type: 3}
+  - {fileID: 985661256, guid: 2aa773875d6cf5547b55e6c8cd9aed06, type: 3}
+  - {fileID: 1928437254, guid: 2aa773875d6cf5547b55e6c8cd9aed06, type: 3}
+  - {fileID: -241418927, guid: 2aa773875d6cf5547b55e6c8cd9aed06, type: 3}
+  - {fileID: -321794876, guid: 2aa773875d6cf5547b55e6c8cd9aed06, type: 3}
+  - {fileID: 2020280741, guid: 2aa773875d6cf5547b55e6c8cd9aed06, type: 3}
+  - {fileID: 181898124, guid: 2aa773875d6cf5547b55e6c8cd9aed06, type: 3}
+  - {fileID: -746242363, guid: 2aa773875d6cf5547b55e6c8cd9aed06, type: 3}
+  _fps: 8

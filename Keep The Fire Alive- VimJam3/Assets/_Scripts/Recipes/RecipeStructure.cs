@@ -8,9 +8,9 @@ public class RecipeStructure : Recipe
     [SerializeField] private Sprite _itemToCraftSprite;
     [SerializeField] private PlaceableTypes _typeOfPlaceable;
 
-    public override void SetCraft()
+    public override void ButtonSetCraft()
     {
-        CraftingManager.SetSpriteToSpawn(_itemToCraft, _itemToCraftSprite, CraftItem, _typeOfPlaceable);
-        base.SetCraft();
+        CraftingManager?.SetSpriteToSpawn(_itemToCraft, _itemToCraftSprite, CraftItem, _typeOfPlaceable);
+        base.ButtonSetCraft();
     }
 }

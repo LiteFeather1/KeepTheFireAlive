@@ -3,9 +3,9 @@
 public class RecipeHat : Recipe
 {
     [SerializeField] private PlayerHat _playerHat;
-    public override void SetCraft()
+    public override void ButtonSetCraft()
     {
         _playerHat.SetNewHat();
-        base.SetCraft();
+        base.ButtonSetCraft();
     }
 }

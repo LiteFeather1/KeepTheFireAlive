@@ -67,12 +67,13 @@ public class Recipe : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler
             RemoveMaterialsOfInventory(_items[i], _amountNecessary[i]);
         }
         Debug.Log("Crafted");
+        Time.timeScale = 1;
     }
 
     /// <summary>
     /// Ui Button Event
     /// </summary>
-    public virtual void SetCraft()
+    public virtual void ButtonSetCraft()
     {
         UiManager.SwitchCraftingMenuActive();
         UiManager.DeactivatePopUpWindow();

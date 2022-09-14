@@ -62,7 +62,7 @@ public class SpawnManager : MonoBehaviour
     {
         int chosePos = Random.Range(0, _iceSpawnPos.Length);
         Vector2 pos = _iceSpawnPos[chosePos].position;
-        Vector2 size = _iceSpawnPos[chosePos].localScale;
+        Vector2 size = _iceSpawnPos[chosePos].localScale/2;
         Vector2 posReturn = new(pos.x + Random.Range(-size.x, size.x), pos.y + Random.Range(-size.y, size.y));
         return posReturn;
     }

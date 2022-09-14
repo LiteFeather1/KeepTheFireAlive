@@ -95,7 +95,7 @@ GameObject:
   - component: {fileID: 1570542200521113310}
   - component: {fileID: 1570542200521113311}
   - component: {fileID: 1570542200521113280}
-  - component: {fileID: 1570542200521113281}
+  - component: {fileID: 2344342543722093318}
   m_Layer: 5
   m_Name: Fence_Boxes
   m_TagString: Untagged
@@ -159,7 +159,7 @@ SpriteRenderer:
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: 0
   m_SortingLayer: 0
-  m_SortingOrder: 0
+  m_SortingOrder: -1
   m_Sprite: {fileID: 7482667652216324306, guid: 311925a002f4447b3a28927169b83ea6, type: 3}
   m_Color: {r: 0, g: 1, b: 0, a: 0.49803922}
   m_FlipX: 0
@@ -197,7 +197,7 @@ BoxCollider2D:
   serializedVersion: 2
   m_Size: {x: 1, y: 1}
   m_EdgeRadius: 0
---- !u!114 &1570542200521113281
+--- !u!114 &2344342543722093318
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -206,6 +206,8 @@ MonoBehaviour:
   m_GameObject: {fileID: 1570542200521113309}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 18e7112766200854f9cabf42942a57fb, type: 3}
+  m_Script: {fileID: 11500000, guid: e9c738bcb0806a647a6532552754ac07, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _collider: {fileID: 1570542200521113280}
+  _sr: {fileID: 1570542200521113311}

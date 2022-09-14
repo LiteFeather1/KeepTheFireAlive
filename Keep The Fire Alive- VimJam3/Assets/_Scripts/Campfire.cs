@@ -1,4 +1,3 @@
-using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -24,6 +23,13 @@ public class Campfire : MonoBehaviour
     private float _timePassed;
     private float _rate = 1;
 
+    [Header("Animator")]
+    [SerializeField] private FlipBook _animator;
+    [SerializeField] private FlipSheet _bigAnimation;
+    [SerializeField] private FlipSheet _mediumAnimation;
+    [SerializeField] private FlipSheet _smallAnimation;
+    [SerializeField] private FlipSheet _almostAnimation;
+
     public static Campfire Instance { get; private set; }
 
     private GameManager _gm;
@@ -37,6 +43,11 @@ public class Campfire : MonoBehaviour
     {
         _gm = GameManager.Instance;
         _gm.RainStarted += IsRaining;
+    }
+
+    private void Start()
+    {
+
     }
 
     private void Update()
@@ -95,17 +106,47 @@ public class Campfire : MonoBehaviour
         switch (_fireState)
         {
             case FireState.Big:
+                StateChangedToBig();
                 break;
             case FireState.Medium:
+                StateChangedToMedium();
                 break;
             case FireState.Small:
+                StateChangedToSmall();
                 break;
             case FireState.AlmostDead:
+                StateChangedToAlmostDead();
                 break;
             case FireState.Dead:
-                _gm.GameLost();
+                StateChangedToDead();
                 break;
         }
+    }
+
+    private void StateChangedToBig()
+    {
+        Play(_bigAnimation);
+    }
+
+    private void StateChangedToMedium()
+    {
+        Play(_mediumAnimation);
+    }
+
+    private void StateChangedToSmall()
+    {
+        Play(_smallAnimation);
+    }
+
+    private void StateChangedToAlmostDead()
+    {
+        Play(_almostAnimation);
+    }
+
+    private void StateChangedToDead()
+    {
+        _animator.gameObject.SetActive(false);
+        _gm.GameLost();
     }
 
     private void HandleLights()
@@ -113,8 +154,13 @@ public class Campfire : MonoBehaviour
         //_bigLight.pointLightOuterRadius = _bigRadiousPerState[(int)_fireState];
         _timePassed += Time.deltaTime * 1f * _rate;
         _bigLight.pointLightOuterRadius = Mathf.Lerp(_minBigRadiousPerState[(int)_fireState], _bigRadiousPerState[(int)_fireState],Mathf.PingPong(_timePassed,1));
-        _smallLight.pointLightOuterRadius = Mathf.Lerp(_minSmallRadiousPerState[(int)_fireState], _smallRadiousPerState[(int)_fireState], Mathf.PingPong(_timePassed, 1));
+        _smallLight.pointLightOuterRadius = Mathf.Lerp(_minSmallRadiousPerState[(int)_fireState], _smallRadiousPerState[(int)_fireState], Mathf.PingPong(_timePassed * 2, 1));
         _rate = Mathf.Sin(Time.time);
+    }
+
+    private void Play(FlipSheet _sheetToPlay)
+    {
+        _animator.Play(_sheetToPlay, true);
     }
 
     private void IsRaining(float rainStrength)

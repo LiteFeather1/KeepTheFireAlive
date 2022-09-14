@@ -27,6 +27,8 @@ public class UiManager : MonoBehaviour
             if (_craftingScreen.activeInHierarchy)
             {
                 SwitchCraftingMenuActive();
+                DeactivatePopUpWindow();
+                Time.timeScale = 1;
             }
     }
 
@@ -36,8 +38,6 @@ public class UiManager : MonoBehaviour
         _craftingScreen.SetActive(!active);
         if (!active)
             Time.timeScale = 0;
-        else
-            Time.timeScale = 1;
     }
 
     public void ActivatePopUpWindow(RectTransform target, Materials[] materialsToShow, int[] amountNeeded, string description)

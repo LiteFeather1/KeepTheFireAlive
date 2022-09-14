@@ -5,9 +5,9 @@ using UnityEngine;
 public class RecipeAxe : Recipe
 {
     [SerializeField] private PlayerAxe _playerAxe;
-    public override void SetCraft()
+    public override void ButtonSetCraft()
     {
-        base.SetCraft();
+        base.ButtonSetCraft();
         _playerAxe.SetNewAxe();
         CraftItem();
     }

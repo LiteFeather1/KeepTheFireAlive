@@ -290,7 +290,7 @@ public class Player : MonoBehaviour
 
     private void DepleteWetness()
     {
-        if (_isProtected)
+        if (_inputStates == InputStates.NearCampfire)
         {
             if (_wetness > 0)
                 _wetness -= _loseWetRate * Time.deltaTime;
@@ -354,6 +354,17 @@ public class Player : MonoBehaviour
     {
         if (_inputStates == InputStates.Nothing)
             FeedMe(Materials.Grass);
+    }
+
+    private void OnCollisionEnter2D(Collision2D collision)
+    {
+        Ice ice = collision.gameObject.GetComponent<Ice>();
+        if(ice != null)
+        {
+            _fireLife -= 5;
+            _wetness += 10;
+            Destroy(ice.gameObject);
+        }
     }
 
     private void OnTriggerEnter2D(Collider2D collision)

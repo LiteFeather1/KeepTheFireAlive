@@ -6,8 +6,12 @@ public class CraftingManager : MonoBehaviour
 {
     [Header("Crafting")]
     [SerializeField]  private Transform _itemToPlaceLocation;
-    [SerializeField] private SpriteRenderer _currentItemToPlace;    
+    [SerializeField] private SpriteRenderer _currentItemToPlace; 
     private GameObject _itemToCraft;
+    private GameObject _itemToCraftVertical;
+    private GameObject _itemToCraftHorizontal;
+    private Sprite _verticalSprite;
+    private Sprite _horizontalSprite;
     [Range(0f, 1f)] [SerializeField] private float _spriteTransparance;
 
     [Header("PlacementBoxes")]
@@ -58,11 +62,38 @@ public class CraftingManager : MonoBehaviour
         PlacementBoxesToActivate(type);
     }
 
-    public void SetSpriteVisiable(Transform position)
+    public void SetSpriteVisiable(Transform transform)
     {
         _currentItemToPlace.color = new Color(1, 1, 1, _spriteTransparance);
-        _itemToPlaceLocation.position = position.position;
-        _itemToPlaceLocation.rotation = position.rotation;
+        _itemToPlaceLocation.position = transform.position;
+        float sign = Mathf.Sign(transform.localScale.x);
+        _itemToPlaceLocation.localScale = new Vector3(1 * sign, 1);
+    }
+
+    public void SetSpriteToSpawnVerticalAndHorizontal(GameObject verticalGO, GameObject horizontal, System.Action action, PlaceableTypes type, params Sprite[] verticaHorizontalS)
+    {
+        _itemToCraftVertical = verticalGO;
+        _itemToCraftHorizontal = horizontal;
+        _verticalSprite = verticaHorizontalS[0];
+        _horizontalSprite = verticaHorizontalS[1];
+        _spawnAction = action;
+        PlacementBoxesToActivate(type);
+    }
+
+    public void SetSpriteVisiableHorizontalVertical(Transform transform)
+    {
+        _currentItemToPlace.color = new Color(1, 1, 1, _spriteTransparance);
+        if (transform.eulerAngles.z == 90 || transform.eulerAngles.z == 270)
+        {
+            _currentItemToPlace.sprite = _verticalSprite;
+            _itemToCraft = _itemToCraftVertical;
+        }
+        else
+        {
+            _currentItemToPlace.sprite = _horizontalSprite;
+            _itemToCraft = _itemToCraftHorizontal;
+        }
+        _itemToPlaceLocation.position = transform.position;
     }
 
     public void SetSpriteInvisiable()
@@ -72,12 +103,12 @@ public class CraftingManager : MonoBehaviour
 
     public GameObject CraftObject()
     {
-        Instantiate(_itemToCraft, _itemToPlaceLocation.position, _itemToPlaceLocation.rotation);
+        Instantiate(_itemToCraftHorizontal, _itemToPlaceLocation.position, Quaternion.identity);
         _spawnAction?.Invoke();
         _spawnAction = null;
         DeactivatePlacementBoxes();
         _currentItemToPlace.sprite = null;
-        return _itemToCraft;
+        return _itemToCraftHorizontal;
     }
 }
 

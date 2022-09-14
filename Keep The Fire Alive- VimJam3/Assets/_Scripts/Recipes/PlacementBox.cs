@@ -5,6 +5,15 @@ using UnityEngine;
 public class PlacementBox : MonoBehaviour
 {
     private CraftingManager _craftingManager;
+    private GameObject _myObject;
+    [SerializeField] private Collider2D _collider;
+    [SerializeField] private SpriteRenderer _sr;
+
+    private void OnEnable()
+    {
+        if (_myObject == null)
+            SetComponents(true);
+    }
 
     private void Start()
     {
@@ -23,6 +32,14 @@ public class PlacementBox : MonoBehaviour
 
     private void OnMouseDown()
     {
-        _craftingManager?.CraftObject();
+        _myObject = _craftingManager?.CraftObject();
+        if (_myObject != null)
+            SetComponents(false);
+    }
+
+    private void SetComponents(bool active)
+    {
+        _collider.enabled = active;
+        _sr.enabled = active;
     }
 }

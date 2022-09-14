@@ -7,7 +7,8 @@ public class RecipeAxe : Recipe
     [SerializeField] private PlayerAxe _playerAxe;
     public override void SetCraft()
     {
-        _playerAxe.SetNewAxe();
         base.SetCraft();
+        _playerAxe.SetNewAxe();
+        CraftItem();
     }
 }

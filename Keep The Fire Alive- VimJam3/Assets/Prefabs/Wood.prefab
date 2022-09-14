@@ -13,9 +13,10 @@ GameObject:
   - component: {fileID: 898650907718373210}
   - component: {fileID: 898650907718373211}
   - component: {fileID: 898650907718373220}
-  m_Layer: 0
+  - component: {fileID: 5406765462310543393}
+  m_Layer: 6
   m_Name: Wood
-  m_TagString: Untagged
+  m_TagString: Material
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -101,6 +102,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _myType: 0
   _howMuchToAdd: 1
+  _rb: {fileID: 5406765462310543393}
 --- !u!61 &898650907718373211
 BoxCollider2D:
   m_ObjectHideFlags: 0
@@ -140,3 +142,24 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _sr: {fileID: 898650907718373209}
+--- !u!50 &5406765462310543393
+Rigidbody2D:
+  serializedVersion: 4
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 898650907718373221}
+  m_BodyType: 0
+  m_Simulated: 1
+  m_UseFullKinematicContacts: 0
+  m_UseAutoMass: 0
+  m_Mass: 1
+  m_LinearDrag: 1
+  m_AngularDrag: 0.05
+  m_GravityScale: 1
+  m_Material: {fileID: 0}
+  m_Interpolate: 0
+  m_SleepingMode: 1
+  m_CollisionDetection: 0
+  m_Constraints: 0

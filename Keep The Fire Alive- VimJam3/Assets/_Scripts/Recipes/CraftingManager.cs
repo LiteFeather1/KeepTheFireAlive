@@ -70,13 +70,14 @@ public class CraftingManager : MonoBehaviour
         _currentItemToPlace.color = Color.clear;
     }
 
-    public void CraftObject()
+    public GameObject CraftObject()
     {
         Instantiate(_itemToCraft, _itemToPlaceLocation.position, _itemToPlaceLocation.rotation);
         _spawnAction?.Invoke();
         _spawnAction = null;
         DeactivatePlacementBoxes();
         _currentItemToPlace.sprite = null;
+        return _itemToCraft;
     }
 }
 

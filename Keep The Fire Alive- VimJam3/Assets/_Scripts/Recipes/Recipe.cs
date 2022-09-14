@@ -75,6 +75,7 @@ public class Recipe : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler
     public virtual void SetCraft()
     {
         UiManager.SwitchCraftingMenuActive();
+        UiManager.DeactivatePopUpWindow();
     }
 
     public void OnPointerEnter(PointerEventData eventData)

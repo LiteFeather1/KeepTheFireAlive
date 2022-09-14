@@ -5,14 +5,18 @@ TagManager:
   serializedVersion: 2
   tags:
   - CraftingBench
+  - Campfire
+  - Material
+  - Tree
+  - Shack
   layers:
   - Default
   - TransparentFX
   - Ignore Raycast
-  - 
+  - Player
   - Water
   - UI
-  - 
+  - Pushables
   - 
   - 
   - 
@@ -39,6 +43,9 @@ TagManager:
   - 
   - 
   m_SortingLayers:
+  - name: BackGround
+    uniqueID: 3729183339
+    locked: 0
   - name: Default
     uniqueID: 0
     locked: 0

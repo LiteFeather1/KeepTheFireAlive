@@ -9,20 +9,29 @@ public class PlayerHat : MonoBehaviour
     private float _depleatStrenght = .5f;
     private bool _isActive;
 
+    [SerializeField] private InventoryItemUi _inventoryItemUi;
+
     [SerializeField] private Player _player;
     public bool IsActive => _isActive;
     public float IsolationStrength  => _isolationStrength;
 
+    private void Start()
+    {
+        _inventoryItemUi.SetMe(_durability, 100);
+        enabled = false;
+    }
+
     private void Update()
     {
         DepleatDurabity();
+        _inventoryItemUi.SetMe(_durability, 100);
     }
 
     public void SetNewHat()
     {
         _durability = 100;
         _isActive = true;
-        gameObject.SetActive(_isActive);
+        enabled = _isActive;
         _player.SetIsolation(_isolationStrength);
     }
 
@@ -38,7 +47,7 @@ public class PlayerHat : MonoBehaviour
     {
         print("HatBroke");
         _isActive = false;
-        gameObject.SetActive(_isActive);
+        enabled = _isActive;
         _player.SetIsolation(0);
     }
 }

@@ -16,6 +16,9 @@ public class UiManager : MonoBehaviour
     [SerializeField] private TMP_Text[] _materialText;
     [SerializeField] private TMP_Text _description;
 
+    //[Header("InventoryUi")]
+    //[SerializeField] private something;
+
     private static UiManager Instance => GameManager.Instance.Ui;
 
     private void Update()

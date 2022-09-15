@@ -1,0 +1,262 @@
+Using pre-set license
+Built from '2021.3/staging' branch; Version is '2021.3.6f1 (7da38d85baf6) revision 8233869'; Using compiler version '192829333'; Build Type 'Release'
+OS: 'Windows 11  (10.0.22000) 64bit Core' Language: 'en' Physical Memory: 15716 MB
+BatchMode: 1, IsHumanControllingUs: 0, StartBugReporterOnCrash: 0, Is64bit: 1, IsPro: 1
+
+COMMAND LINE ARGUMENTS:
+C:\Program Files\Unity\Hub\Editor\2021.3.6f1\Editor\Unity.exe
+-adb2
+-batchMode
+-noUpm
+-name
+AssetImportWorker0
+-projectPath
+C:/Users/vange/OneDrive/Documents/GitHub/KeepTheFireAlive/Keep The Fire Alive- VimJam3
+-logFile
+Logs/AssetImportWorker0.log
+-srvPort
+62803
+Successfully changed project path to: C:/Users/vange/OneDrive/Documents/GitHub/KeepTheFireAlive/Keep The Fire Alive- VimJam3
+C:/Users/vange/OneDrive/Documents/GitHub/KeepTheFireAlive/Keep The Fire Alive- VimJam3
+[UnityMemory] Configuration Parameters - Can be set up in boot.config
+    "memorysetup-bucket-allocator-granularity=16"
+    "memorysetup-bucket-allocator-bucket-count=8"
+    "memorysetup-bucket-allocator-block-size=33554432"
+    "memorysetup-bucket-allocator-block-count=8"
+    "memorysetup-main-allocator-block-size=16777216"
+    "memorysetup-thread-allocator-block-size=16777216"
+    "memorysetup-gfx-main-allocator-block-size=16777216"
+    "memorysetup-gfx-thread-allocator-block-size=16777216"
+    "memorysetup-cache-allocator-block-size=4194304"
+    "memorysetup-typetree-allocator-block-size=2097152"
+    "memorysetup-profiler-bucket-allocator-granularity=16"
+    "memorysetup-profiler-bucket-allocator-bucket-count=8"
+    "memorysetup-profiler-bucket-allocator-block-size=33554432"
+    "memorysetup-profiler-bucket-allocator-block-count=8"
+    "memorysetup-profiler-allocator-block-size=16777216"
+    "memorysetup-profiler-editor-allocator-block-size=1048576"
+    "memorysetup-temp-allocator-size-main=16777216"
+    "memorysetup-job-temp-allocator-block-size=2097152"
+    "memorysetup-job-temp-allocator-block-size-background=1048576"
+    "memorysetup-job-temp-allocator-reduction-small-platforms=262144"
+    "memorysetup-temp-allocator-size-background-worker=32768"
+    "memorysetup-temp-allocator-size-job-worker=262144"
+    "memorysetup-temp-allocator-size-preload-manager=33554432"
+    "memorysetup-temp-allocator-size-nav-mesh-worker=65536"
+    "memorysetup-temp-allocator-size-audio-worker=65536"
+    "memorysetup-temp-allocator-size-cloud-worker=32768"
+    "memorysetup-temp-allocator-size-gi-baking-worker=262144"
+    "memorysetup-temp-allocator-size-gfx=262144"
+Refreshing native plugins compatible for Editor in 140.36 ms, found 4 plugins.
+Preloading 0 native plugins for Editor in 0.00 ms.
+Initialize engine version: 2021.3.6f1 (7da38d85baf6)
+[Subsystems] Discovering subsystems at path C:/Program Files/Unity/Hub/Editor/2021.3.6f1/Editor/Data/Resources/UnitySubsystems
+[Subsystems] Discovering subsystems at path C:/Users/vange/OneDrive/Documents/GitHub/KeepTheFireAlive/Keep The Fire Alive- VimJam3/Assets
+GfxDevice: creating device client; threaded=0; jobified=0
+Direct3D:
+    Version:  Direct3D 11.0 [level 11.1]
+    Renderer: NVIDIA GeForce RTX 3050 Laptop GPU (ID=0x25a2)
+    Vendor:   NVIDIA
+    VRAM:     3991 MB
+    Driver:   31.0.15.1640
+Initialize mono
+Mono path[0] = 'C:/Program Files/Unity/Hub/Editor/2021.3.6f1/Editor/Data/Managed'
+Mono path[1] = 'C:/Program Files/Unity/Hub/Editor/2021.3.6f1/Editor/Data/MonoBleedingEdge/lib/mono/unityjit-win32'
+Mono config path = 'C:/Program Files/Unity/Hub/Editor/2021.3.6f1/Editor/Data/MonoBleedingEdge/etc'
+Using monoOptions --debugger-agent=transport=dt_socket,embedding=1,server=y,suspend=n,address=127.0.0.1:56628
+Begin MonoManager ReloadAssembly
+Registering precompiled unity dll's ...
+Register platform support module: C:/Program Files/Unity/Hub/Editor/2021.3.6f1/Editor/Data/PlaybackEngines/WebGLSupport/UnityEditor.WebGL.Extensions.dll
+Register platform support module: C:/Program Files/Unity/Hub/Editor/2021.3.6f1/Editor/Data/PlaybackEngines/WindowsStandaloneSupport/UnityEditor.WindowsStandalone.Extensions.dll
+Register platform support module: C:/Program Files/Unity/Hub/Editor/2021.3.6f1/Editor/Data/PlaybackEngines/MetroSupport/UnityEditor.UWP.Extensions.dll
+Registered in 0.006349 seconds.
+Native extension for UWP target not found
+Native extension for WindowsStandalone target not found
+Native extension for WebGL target not found
+Refreshing native plugins compatible for Editor in 133.22 ms, found 4 plugins.
+Preloading 0 native plugins for Editor in 0.00 ms.
+Mono: successfully reloaded assembly
+- Completed reload, in  0.717 seconds
+Domain Reload Profiling:
+	ReloadAssembly (717ms)
+		BeginReloadAssembly (76ms)
+			ExecutionOrderSort (0ms)
+			DisableScriptedObjects (0ms)
+			BackupInstance (0ms)
+			ReleaseScriptingObjects (0ms)
+			CreateAndSetChildDomain (1ms)
+		EndReloadAssembly (524ms)
+			LoadAssemblies (74ms)
+			RebuildTransferFunctionScriptingTraits (0ms)
+			SetupTypeCache (103ms)
+			ReleaseScriptCaches (0ms)
+			RebuildScriptCaches (29ms)
+			SetupLoadedEditorAssemblies (340ms)
+				LogAssemblyErrors (0ms)
+				InitializePlatformSupportModulesInManaged (9ms)
+				SetLoadedEditorAssemblies (0ms)
+				RefreshPlugins (133ms)
+				BeforeProcessingInitializeOnLoad (1ms)
+				ProcessInitializeOnLoadAttributes (146ms)
+				ProcessInitializeOnLoadMethodAttributes (49ms)
+				AfterProcessingInitializeOnLoad (0ms)
+				EditorAssembliesLoaded (0ms)
+			ExecutionOrderSort2 (0ms)
+			AwakeInstancesAfterBackupRestoration (0ms)
+Platform modules already initialized, skipping
+Registering precompiled user dll's ...
+Registered in 0.007950 seconds.
+Begin MonoManager ReloadAssembly
+Symbol file LoadedFromMemory doesn't match image C:\Users\vange\OneDrive\Documents\GitHub\KeepTheFireAlive\Keep The Fire Alive- VimJam3\Library\PackageCache\com.unity.visualscripting@1.7.8\Editor\VisualScripting.Core\Dependencies\YamlDotNet\Unity.VisualScripting.YamlDotNet.dll
+Symbol file LoadedFromMemory doesn't match image C:\Users\vange\OneDrive\Documents\GitHub\KeepTheFireAlive\Keep The Fire Alive- VimJam3\Library\PackageCache\com.unity.visualscripting@1.7.8\Editor\VisualScripting.Core\Dependencies\DotNetZip\Unity.VisualScripting.IonicZip.dll
+Native extension for UWP target not found
+Native extension for WindowsStandalone target not found
+Native extension for WebGL target not found
+Refreshing native plugins compatible for Editor in 115.94 ms, found 4 plugins.
+Preloading 0 native plugins for Editor in 0.00 ms.
+Mono: successfully reloaded assembly
+- Completed reload, in  1.383 seconds
+Domain Reload Profiling:
+	ReloadAssembly (1383ms)
+		BeginReloadAssembly (119ms)
+			ExecutionOrderSort (0ms)
+			DisableScriptedObjects (6ms)
+			BackupInstance (0ms)
+			ReleaseScriptingObjects (0ms)
+			CreateAndSetChildDomain (21ms)
+		EndReloadAssembly (1146ms)
+			LoadAssemblies (113ms)
+			RebuildTransferFunctionScriptingTraits (0ms)
+			SetupTypeCache (278ms)
+			ReleaseScriptCaches (1ms)
+			RebuildScriptCaches (70ms)
+			SetupLoadedEditorAssemblies (646ms)
+				LogAssemblyErrors (0ms)
+				InitializePlatformSupportModulesInManaged (6ms)
+				SetLoadedEditorAssemblies (0ms)
+				RefreshPlugins (116ms)
+				BeforeProcessingInitializeOnLoad (125ms)
+				ProcessInitializeOnLoadAttributes (281ms)
+				ProcessInitializeOnLoadMethodAttributes (111ms)
+				AfterProcessingInitializeOnLoad (7ms)
+				EditorAssembliesLoaded (0ms)
+			ExecutionOrderSort2 (0ms)
+			AwakeInstancesAfterBackupRestoration (6ms)
+Platform modules already initialized, skipping
+========================================================================
+Worker process is ready to serve import requests
+Launched and connected shader compiler UnityShaderCompiler.exe after 0.04 seconds
+Refreshing native plugins compatible for Editor in 1.17 ms, found 4 plugins.
+Preloading 0 native plugins for Editor in 0.00 ms.
+Unloading 5730 Unused Serialized files (Serialized files now loaded: 0)
+Unloading 56 unused Assets / (0.8 MB). Loaded Objects now: 6184.
+Memory consumption went from 225.3 MB to 224.6 MB.
+Total: 6.010300 ms (FindLiveObjects: 0.410200 ms CreateObjectMapping: 0.193300 ms MarkObjects: 5.003700 ms  DeleteObjects: 0.401900 ms)
+
+AssetImportParameters requested are different than current active one (requested -> active):
+  custom:video-decoder-ogg-theora: a1e56fd34408186e4bbccfd4996cb3dc -> 
+  custom:container-muxer-webm: aa71ff27fc2769a1b78a27578f13a17b -> 
+  custom:container-demuxer-webm: 4f35f7cbe854078d1ac9338744f61a02 -> 
+  custom:video-encoder-webm-vp8: eb34c28f22e8b96e1ab97ce403110664 -> 
+  custom:video-codec-MediaFoundation-h265: 746d11721c4dcdbdad8f713fa42b33f4 -> 
+  custom:audio-encoder-webm-vorbis: bf7c407c2cedff20999df2af8eb42d56 -> 
+  custom:framework-win-MediaFoundation: 216162199b28c13a410421893ffa2e32 -> 
+  custom:container-demuxer-ogg: 62fdf1f143b41e24485cea50d1cbac27 -> 
+  custom:video-decoder-webm-vp8: 9c59270c3fd7afecdb556c50c9e8de78 -> 
+  custom:audio-decoder-ogg-vorbis: bf7c407c2cedff20999df2af8eb42d56 -> 
+========================================================================
+Received Import Request.
+  Time since last request: 656192.773824 seconds.
+  path: Assets/Sprites/ItemUiFrame.aseprite
+  artifactKey: Guid(7db495f8ae13f68458512339a66ab01b) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/Sprites/ItemUiFrame.aseprite using Guid(7db495f8ae13f68458512339a66ab01b) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: '778c3403d9a4889e82ad31eec005cdce') in 0.036348 seconds 
+========================================================================
+Received Import Request.
+  Time since last request: 5.341607 seconds.
+  path: Assets/Sprites/crafttable.aseprite
+  artifactKey: Guid(657ddaa1fbd89d94d81f11ccce9e6802) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/Sprites/crafttable.aseprite using Guid(657ddaa1fbd89d94d81f11ccce9e6802) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: 'aa6823ebcc7dd88196186ba3018810ae') in 0.002135 seconds 
+========================================================================
+Received Import Request.
+  Time since last request: 6.780303 seconds.
+  path: Assets/Sprites/cenarioheatgame.aseprite
+  artifactKey: Guid(b3429118692abba4faeffdd4304b8a9b) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/Sprites/cenarioheatgame.aseprite using Guid(b3429118692abba4faeffdd4304b8a9b) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: 'c6ac13168b60ac26d64697538aca6174') in 0.002067 seconds 
+========================================================================
+Received Import Request.
+  Time since last request: 3.786550 seconds.
+  path: Assets/Sprites/chaofogueira.aseprite
+  artifactKey: Guid(5139e3facb5062e43babb0d9750772a1) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/Sprites/chaofogueira.aseprite using Guid(5139e3facb5062e43babb0d9750772a1) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: '629b2d9e51baa3d85cd1d2a982a0b4c9') in 0.006177 seconds 
+========================================================================
+Received Import Request.
+  Time since last request: 2.650525 seconds.
+  path: Assets/Sprites/campfire.aseprite
+  artifactKey: Guid(334304409d20c6a46974626e363fec51) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/Sprites/campfire.aseprite using Guid(334304409d20c6a46974626e363fec51) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: '4caea7ab57d4dc8524f249ef0f31a004') in 0.002194 seconds 
+========================================================================
+Received Import Request.
+  Time since last request: 5.228158 seconds.
+  path: Assets/Sprites/50x50button.aseprite
+  artifactKey: Guid(ad725dedb8e63e043aec2bf3ce3d50e1) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/Sprites/50x50button.aseprite using Guid(ad725dedb8e63e043aec2bf3ce3d50e1) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: '1f13ce374a48934cebec769a3e38cfd3') in 0.002879 seconds 
+========================================================================
+Received Import Request.
+  Time since last request: 1.294214 seconds.
+  path: Assets/Sprites/axe.aseprite
+  artifactKey: Guid(8ec2b8df812a825419f5ea33e7d62157) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/Sprites/axe.aseprite using Guid(8ec2b8df812a825419f5ea33e7d62157) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: '7773ff7b4fe416987b40a9abe35f351a') in 0.002583 seconds 
+========================================================================
+Received Import Request.
+  Time since last request: 2.945171 seconds.
+  path: Assets/Sprites/fence.aseprite
+  artifactKey: Guid(91b982db2b2d5db4b9d715c36cc54e99) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/Sprites/fence.aseprite using Guid(91b982db2b2d5db4b9d715c36cc54e99) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: 'f3a03041352489064552a66ffd885b59') in 0.002514 seconds 
+========================================================================
+Received Import Request.
+  Time since last request: 0.423828 seconds.
+  path: Assets/Sprites/drop.aseprite
+  artifactKey: Guid(9a1957ca3f2b2504088b68fa0109afab) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/Sprites/drop.aseprite using Guid(9a1957ca3f2b2504088b68fa0109afab) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: '7b1a2764def271fba755350f8220d9bb') in 0.002949 seconds 
+========================================================================
+Received Import Request.
+  Time since last request: 1.561718 seconds.
+  path: Assets/Sprites/putthing.aseprite
+  artifactKey: Guid(df00e52e35bbe02478ed2955fadd6d45) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/Sprites/putthing.aseprite using Guid(df00e52e35bbe02478ed2955fadd6d45) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: '9a1e359ff98980f8879bf3ff4dc6e6db') in 0.002025 seconds 
+========================================================================
+Received Import Request.
+  Time since last request: 8.736677 seconds.
+  path: Assets/Sprites/infoui~.aseprite
+  artifactKey: Guid(fc4e353272dc7364b8a419bd8e606a9c) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/Sprites/infoui~.aseprite using Guid(fc4e353272dc7364b8a419bd8e606a9c) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: 'eba889b0d951ffca6dab25d271918b8c') in 0.002160 seconds 
+========================================================================
+Received Import Request.
+  Time since last request: 20.576192 seconds.
+  path: Assets/Sprites/handshadow.aseprite
+  artifactKey: Guid(5cded23f11a853c44ab330aa78e3b14d) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/Sprites/handshadow.aseprite using Guid(5cded23f11a853c44ab330aa78e3b14d) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: '03f7ca1228648ba4a92e8a9c5ba4ebf2') in 0.002206 seconds 
+========================================================================
+Received Import Request.
+  Time since last request: 18.187093 seconds.
+  path: Assets/Sprites/shelter.aseprite
+  artifactKey: Guid(6a284219e708e8d49834316d9a31a0ce) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/Sprites/shelter.aseprite using Guid(6a284219e708e8d49834316d9a31a0ce) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: '6bdd90850877fdf3b4841cdd42868ec1') in 0.002277 seconds 
+========================================================================
+Received Import Request.
+  Time since last request: 9.495508 seconds.
+  path: Assets/Sprites/grassfloor.aseprite
+  artifactKey: Guid(0e8ba8aacda3bb74fa8fda80bb52a4aa) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/Sprites/grassfloor.aseprite using Guid(0e8ba8aacda3bb74fa8fda80bb52a4aa) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: 'c380a7653b76e8a2cc68ef68d625131a') in 0.002244 seconds 
+========================================================================
+Received Import Request.
+  Time since last request: 39.089306 seconds.
+  path: Assets/Sprites/uiframe2.aseprite
+  artifactKey: Guid(6a68a0dcda936304e82c5f143f3153be) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/Sprites/uiframe2.aseprite using Guid(6a68a0dcda936304e82c5f143f3153be) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: '575caf5d1811bef7ed08d28206a4983b') in 0.002926 seconds 
+========================================================================
+Received Import Request.
+  Time since last request: 42.130684 seconds.
+  path: Assets/Sprites/lifeplayer.aseprite
+  artifactKey: Guid(264e5a52ea3ed33439c8a80d821ce00f) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/Sprites/lifeplayer.aseprite using Guid(264e5a52ea3ed33439c8a80d821ce00f) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: '3f1721c78eaa20702b321d7194460b5e') in 0.042824 seconds 

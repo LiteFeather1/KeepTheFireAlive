@@ -8774,6 +8774,7 @@ GameObject:
   - component: {fileID: 757608576}
   - component: {fileID: 757608579}
   - component: {fileID: 757608580}
+  - component: {fileID: 757608581}
   m_Layer: 5
   m_Name: WoodInventoryUi
   m_TagString: Untagged
@@ -8922,6 +8923,20 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
+--- !u!114 &757608581
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 757608574}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b5859d7def4e5a144ac45360034d8249, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _player: {fileID: 1271392808}
+  _material: 0
 --- !u!1 &802261404
 GameObject:
   m_ObjectHideFlags: 0
@@ -10422,6 +10437,8 @@ GameObject:
   - component: {fileID: 1212931219}
   - component: {fileID: 1212931218}
   - component: {fileID: 1212931220}
+  - component: {fileID: 1212931222}
+  - component: {fileID: 1212931221}
   m_Layer: 5
   m_Name: StoneInventoryUi
   m_TagString: Untagged
@@ -10502,6 +10519,46 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _myImage: {fileID: 1212931218}
   _text: {fileID: 1364123762}
+--- !u!114 &1212931221
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1212931215}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b5859d7def4e5a144ac45360034d8249, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _player: {fileID: 1271392808}
+  _material: 1
+--- !u!61 &1212931222
+BoxCollider2D:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1212931215}
+  m_Enabled: 1
+  m_Density: 1
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_UsedByEffector: 0
+  m_UsedByComposite: 0
+  m_Offset: {x: 0, y: 0}
+  m_SpriteTilingProperty:
+    border: {x: 0, y: 0, z: 0, w: 0}
+    pivot: {x: 0, y: 0}
+    oldSize: {x: 0, y: 0}
+    newSize: {x: 0, y: 0}
+    adaptiveTilingThreshold: 0
+    drawMode: 0
+    adaptiveTiling: 0
+  m_AutoTiling: 0
+  serializedVersion: 2
+  m_Size: {x: 32, y: 32}
+  m_EdgeRadius: 0
 --- !u!1 &1216332101
 GameObject:
   m_ObjectHideFlags: 0
@@ -16305,6 +16362,8 @@ GameObject:
   - component: {fileID: 1439636880}
   - component: {fileID: 1439636882}
   - component: {fileID: 1439636883}
+  - component: {fileID: 1439636885}
+  - component: {fileID: 1439636884}
   m_Layer: 5
   m_Name: GrassInventoryUi
   m_TagString: Untagged
@@ -16453,6 +16512,46 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
+--- !u!114 &1439636884
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1439636877}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b5859d7def4e5a144ac45360034d8249, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _player: {fileID: 1271392808}
+  _material: 2
+--- !u!61 &1439636885
+BoxCollider2D:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1439636877}
+  m_Enabled: 1
+  m_Density: 1
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_UsedByEffector: 0
+  m_UsedByComposite: 0
+  m_Offset: {x: 0, y: 0}
+  m_SpriteTilingProperty:
+    border: {x: 0, y: 0, z: 0, w: 0}
+    pivot: {x: 0, y: 0}
+    oldSize: {x: 0, y: 0}
+    newSize: {x: 0, y: 0}
+    adaptiveTilingThreshold: 0
+    drawMode: 0
+    adaptiveTiling: 0
+  m_AutoTiling: 0
+  serializedVersion: 2
+  m_Size: {x: 32, y: 32}
+  m_EdgeRadius: 0
 --- !u!1 &1449027338
 GameObject:
   m_ObjectHideFlags: 0
@@ -17747,7 +17846,7 @@ MonoBehaviour:
   _description: {fileID: 1555807852}
   _warningText: {fileID: 842785743}
   _time: {fileID: 954789471}
-  _textInventoryFeed: {fileID: 0}
+  _textInventoryFeed: {fileID: 802261406}
   _fireFire: {fileID: 659498145}
   _fireWetness: {fileID: 1361261082}
 --- !u!4 &1702754784 stripped

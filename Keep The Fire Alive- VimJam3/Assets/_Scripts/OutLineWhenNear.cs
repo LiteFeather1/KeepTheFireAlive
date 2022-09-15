@@ -6,15 +6,13 @@ public class OutLineWhenNear : MonoBehaviour
 {
     [SerializeField] private SpriteRenderer _sr;
 
-    private void OnTriggerEnter2D(Collider2D collision)
+    public void PlayerNear()
     {
-        if (collision.CompareTag("Player"))
-            _sr.material.SetFloat("OutlineThinckess", 1.16f);
+        _sr.material.SetFloat("OutlineThinckess", 1.16f);
     }
 
-    private void OnTriggerExit2D(Collider2D collision)
+    public void PlayerExit()
     {
-        if (collision.CompareTag("Player"))
-            _sr.material.SetFloat("OutlineThinckess", 0);
+        _sr.material.SetFloat("OutlineThinckess", 0);
     }
 }

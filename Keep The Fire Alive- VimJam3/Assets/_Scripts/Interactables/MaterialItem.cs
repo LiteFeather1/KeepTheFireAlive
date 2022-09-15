@@ -16,11 +16,11 @@ public class MaterialItem : MonoBehaviour
     private void OnEnable()
     {
         _gm = GameManager.Instance;
-        _gm.WindEvent += Blow;
+        _gm.WindManager.WindEvent += Blow;
     }
     private void OnDisable()
     {
-        _gm.WindEvent -= Blow;
+        _gm.WindManager.WindEvent -= Blow;
     }
     public void Collect()
     {

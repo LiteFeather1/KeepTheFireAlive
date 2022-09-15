@@ -15,9 +15,12 @@ public class CraftingManager : MonoBehaviour
     [Range(0f, 1f)] [SerializeField] private float _spriteTransparance;
 
     [Header("PlacementBoxes")]
-    [SerializeField] private GameObject _fences;
-    [SerializeField] private GameObject _torch;
-    [SerializeField] private GameObject _shack;
+    [SerializeField] private PlacementBox[] _fences;
+    [SerializeField] protected RecipeSctructureVerticalAndHorizontal _returnAvailabilityForFence;
+    [SerializeField] private PlacementBox[] _torch;
+    [SerializeField] protected RecipeStructure _returnAvailabilityForTorch;
+    [SerializeField] private PlacementBox[] _shack;
+    [SerializeField] protected RecipeStructure _returnAvailabilityForShack;
 
     private System.Action _spawnAction;
 
@@ -33,24 +36,56 @@ public class CraftingManager : MonoBehaviour
         switch (type)
         {
             case PlaceableTypes.Fence:
-                _fences.SetActive(true);
+                int avaibleSpots = 0;
+                foreach (var item in _fences)
+                {
+                    avaibleSpots += item.SetActive(true);
+                }
+                _returnAvailabilityForFence.ReturnAvailability(avaibleSpots);
                 break;
+
             case PlaceableTypes.Torch:
-                _torch.SetActive(true);
+                int avaibleSpotsTorch = 0;
+                foreach (var item in _torch)
+                {
+                    avaibleSpotsTorch += item.SetActive(true);
+                }
+                _returnAvailabilityForTorch.ReturnAvailability(avaibleSpotsTorch);
                 break;
+
             case PlaceableTypes.Shack:
-                _shack.SetActive(true);
-                break;
-            default:
+                int avaibleSpotShack = 0;
+                foreach (var item in _shack)
+                {
+                    avaibleSpotShack += item.SetActive(true);
+                }
+                _returnAvailabilityForShack.ReturnAvailability(avaibleSpotShack);
                 break;
         }
     }
 
+    public void Check()
+    {
+        PlacementBoxesToActivate(PlaceableTypes.Fence);
+        PlacementBoxesToActivate(PlaceableTypes.Torch);
+        PlacementBoxesToActivate(PlaceableTypes.Shack);
+        DeactivatePlacementBoxes();
+    }
+
     public void DeactivatePlacementBoxes()
     {
-        _fences.SetActive(false);
-        _torch.SetActive(false);
-        _shack.SetActive(false);
+        foreach (var item in _fences)
+        {
+            item.SetActive(false);
+        }
+        foreach (var item in _torch)
+        {
+            item.SetActive(false);
+        }
+        foreach (var item in _shack)
+        {
+            item.SetActive(false);
+        }
     }
 
     public void SetSpriteToSpawn(GameObject objectToSpawn, Sprite spriteToUse, System.Action action, PlaceableTypes type)
@@ -103,12 +138,13 @@ public class CraftingManager : MonoBehaviour
 
     public GameObject CraftObject()
     {
-        Instantiate(_itemToCraftHorizontal, _itemToPlaceLocation.position, Quaternion.identity);
+        GameObject newGameObject = Instantiate(_itemToCraft, _itemToPlaceLocation.position, Quaternion.identity);
+        newGameObject.transform.localScale = _itemToPlaceLocation.localScale;
         _spawnAction?.Invoke();
         _spawnAction = null;
         DeactivatePlacementBoxes();
         _currentItemToPlace.sprite = null;
-        return _itemToCraftHorizontal;
+        return newGameObject;
     }
 }
 

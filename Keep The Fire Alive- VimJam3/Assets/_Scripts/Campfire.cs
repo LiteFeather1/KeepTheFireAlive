@@ -42,7 +42,7 @@ public class Campfire : MonoBehaviour
     private void OnEnable()
     {
         _gm = GameManager.Instance;
-        _gm.RainStarted += IsRaining;
+        _gm.RainManager.RainStarted += IsRaining;
     }
 
     private void Start()
@@ -60,7 +60,7 @@ public class Campfire : MonoBehaviour
 
     private void OnDisable()
     {
-        _gm.RainStarted -= IsRaining;
+        _gm.RainManager.RainStarted -= IsRaining;
     }
 
     private void DepleteFire()

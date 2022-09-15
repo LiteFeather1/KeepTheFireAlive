@@ -27,10 +27,17 @@ public class Player : MonoBehaviour
     [Header("Interactables")]
     private MaterialItem _materialNear;
     private ChopTree _treeNear;
+    private bool _axing;
+    private OutLineWhenNear _outlineNear;
 
     [Header("Components")]
     [SerializeField] private Rigidbody2D _rb;
-    [SerializeField] private Collider2D _triggerCollider;
+    [SerializeField] private CircleCollider2D _triggerCollider;
+
+    [Header("Animations")]
+    [SerializeField] private Animator _ac;
+    [SerializeField] private Animator _leafAc;
+    [SerializeField] private SpriteRenderer _leafSR;
 
     private InventorySystem _inventorySystem;
     private Campfire _campfire;
@@ -48,11 +55,23 @@ public class Player : MonoBehaviour
     private GameManager _gm;
     private Camera _cam;
     public PlayerAxe PlayerAxe { get => _playerAxe; set => _playerAxe = value; }
+
     public float FireLife
     {
-        get => _fireLife; set
+        get => _fireLife; 
+        set
         {
             _fireLife = Mathf.Clamp(value, 0, 100);
+            GameManager.Instance.Ui.FireFireDisplay(FireLife);
+        }
+    }
+
+    public float Wetness
+    {
+        get => _wetness; set
+        {
+            _wetness = Mathf.Clamp(value, 0, 100);
+            GameManager.Instance.Ui.FireWetnessDisplay(_wetness);
         }
     }
 
@@ -67,7 +86,7 @@ public class Player : MonoBehaviour
     private void OnEnable()
     {
         _gm = GameManager.Instance;
-        _gm.RainStarted += StartRaining;
+        _gm.RainManager.RainStarted += StartRaining;
     }
 
     private void Start()
@@ -88,12 +107,13 @@ public class Player : MonoBehaviour
 
     private void FixedUpdate()
     {
+        if(!_axing)
         Moviment();
     }
 
     private void OnDisable()
     {
-        _gm.RainStarted -= StartRaining;
+        _gm.RainManager.RainStarted -= StartRaining;
     }
 
     private void Moviment()
@@ -106,6 +126,8 @@ public class Player : MonoBehaviour
         _rb.velocity = _speed * direction;
 
         Flip(xInput);
+        _ac.SetFloat("Speed", Mathf.Abs(_rb.velocity.magnitude));
+        _leafAc.SetFloat("Speed", Mathf.Abs(_rb.velocity.magnitude));
     }
 
     private void Flip(float xInput)
@@ -169,7 +191,7 @@ public class Player : MonoBehaviour
                 GameManager.Instance.Ui.SwitchCraftingMenuActive();
                 break;
             case InputStates.Nothing:
-                FeedMeInput();
+                //FeedMeInput();
                 break;
             default:
                 break;
@@ -187,10 +209,45 @@ public class Player : MonoBehaviour
     private void SwingAxe()
     {
         if (PlayerAxe.IsActive)
+        {
             if (_treeNear != null)
-                _playerAxe.SwingAxe(_treeNear);
-            else
-                print("No Axe");
+            {
+                PlayAnimation();
+            }
+        }
+        else
+        {
+            GameManager.Instance.Ui.WarningText("You need a Axe For that!", 1);
+            print("No Axe");
+        }
+    }
+
+    /// <summary>
+    /// Event for Animtion hit
+    /// </summary>
+    private void HitTree()
+    {
+        _playerAxe.SwingAxe(_treeNear);
+    }
+
+    private void PlayAnimation()
+    {
+        _axing = true;
+        _rb.velocity = Vector2.zero;
+        _ac.SetBool("Axe", _axing);
+        _leafSR.enabled = false;
+    }
+
+    /// <summary>
+    /// AnimationEvent
+    /// </summary>
+    public void ShowLeaf()
+    {
+        _axing = false;
+        print(_axing);
+        _ac.SetBool("Axe", _axing);
+        if (_playerHat.IsActive)
+            _leafSR.enabled = true;
     }
 
     private void FeedCampfireInput()
@@ -199,12 +256,13 @@ public class Player : MonoBehaviour
         {
             FeedCampfireMaterial(Materials.Wood);
         }
-        else if (_inventorySystem.GetItemAmount(Materials.Wood) > 0)
+        else if (_inventorySystem.GetItemAmount(Materials.Grass) > 0)
         {
             FeedCampfireMaterial(Materials.Grass);
         }
         else
         {
+            GameManager.Instance.Ui.WarningText("No Fuel to Feed", 1f);
             print("No Fuel to Feed");
         }
     }
@@ -230,6 +288,47 @@ public class Player : MonoBehaviour
             FeedCampfireMaterial(Materials.Grass);
     }
 
+    public string InventoryPopUpText(Materials material)
+    {
+        if(_inputStates == InputStates.NearCampfire)
+        {
+            if (material != Materials.Stone)
+            {
+                if (_inventorySystem.GetItemAmount(material) > 0)
+                    return $"Feed Mom {material}?";
+                else
+                    return "";
+
+            }
+            else if(material == Materials.Stone)
+            {
+                if (_inventorySystem.GetItemAmount(material) > 0)
+                    return "I can't feed Mom stones!";
+                else
+                    return "";
+            }
+        }
+        else if (_inputStates == InputStates.Nothing)
+        {
+            if (material != Materials.Stone)
+            {
+                if (_inventorySystem.GetItemAmount(material) > 0)
+                    return $"Eat {material}?";
+                else
+                    return "";
+
+            }
+            else if (material == Materials.Stone)
+            {
+                if (_inventorySystem.GetItemAmount(material) > 0)
+                    return "I can't eat stones!";
+                else
+                    return "";
+            }
+        }
+        return "";
+    }
+
     public void SetIsolation(float isolation)
     {
         _isolationStrength = isolation;
@@ -245,7 +344,7 @@ public class Player : MonoBehaviour
         while (true)
         {
             if (!_isProtected)
-                _wetness += (Time.deltaTime * rainStrength) / _isolationStrength;
+                Wetness += (Time.deltaTime * rainStrength) / _isolationStrength;
             yield return new WaitForFixedUpdate();
         }
     }
@@ -258,7 +357,7 @@ public class Player : MonoBehaviour
 
     private void DeathOfWetness()
     {
-        if (_wetness >= 100)
+        if (Wetness >= 100)
         {
             Die("Wetness");
         }
@@ -281,19 +380,21 @@ public class Player : MonoBehaviour
 
     private void DepleteFire()
     {
-        float wetnessMultiplier = Mathf.Lerp(1, 2, _wetness / 100);
+        float wetnessMultiplier = Mathf.Lerp(1, 2, Wetness / 100);
 
         float depleteRate = Time.deltaTime / _depleteRate * wetnessMultiplier;
 
-        _fireLife -= depleteRate;
+        FireLife -= depleteRate;
     }
 
     private void DepleteWetness()
     {
         if (_inputStates == InputStates.NearCampfire)
         {
-            if (_wetness > 0)
-                _wetness -= _loseWetRate * Time.deltaTime;
+            if (Wetness > 0)
+            {
+                Wetness -= _loseWetRate * Time.deltaTime;
+            }
         }
     }
 
@@ -304,11 +405,11 @@ public class Player : MonoBehaviour
             _inventorySystem.RemoveItem(materialToFeed, 1);
             if(materialToFeed == Materials.Wood)
             {
-                _fireLife += 10;
+                FireLife += 10;
             }
             else if(materialToFeed == Materials.Grass)
             {
-                _fireLife += 5;
+                FireLife += 5;
             }
             
         }
@@ -326,14 +427,15 @@ public class Player : MonoBehaviour
         }
         else
         {
+            GameManager.Instance.Ui.WarningText("No Fuel to Feed", 1f);
             print("No Fuel to Feed");
         }
     }
 
     private void Limit()
     {
-        float yLimit = _cam.orthographicSize - transform.localScale.y / 2;
-        float xLimit = _cam.orthographicSize * _cam.aspect - transform.localScale.x / 2;
+        float yLimit = _cam.orthographicSize - _triggerCollider.radius;
+        float xLimit = _cam.orthographicSize * _cam.aspect - _triggerCollider.radius + _triggerCollider.offset.x;
         if (transform.position.x > xLimit)
             transform.position = new Vector2(xLimit, transform.position.y);
         else if (transform.position.x < -xLimit)
@@ -361,9 +463,9 @@ public class Player : MonoBehaviour
         Ice ice = collision.gameObject.GetComponent<Ice>();
         if(ice != null)
         {
-            _fireLife -= 5;
-            _wetness += 10;
-            Destroy(ice.gameObject);
+            FireLife -= 5;
+            Wetness += 10;
+            ice.Die();
         }
     }
 
@@ -384,6 +486,7 @@ public class Player : MonoBehaviour
             {
                 _materialNear = itemNear;
                 _inputStates = InputStates.NearMaterial;
+                SetOutlineOfInterectable(collision);
             }
         }
         else if (collision.CompareTag("Tree"))
@@ -393,21 +496,38 @@ public class Player : MonoBehaviour
                 return;
             _treeNear = treeNear;
             _inputStates = InputStates.NearATree;
+            SetOutlineOfInterectable(collision);
         }
         else if (collision.CompareTag("Campfire"))
         {
             _inputStates = InputStates.NearCampfire;
+            SetOutlineOfInterectable(collision);
         }
         else if (collision.CompareTag("CraftingBench"))
         {
             _inputStates = InputStates.NearCraftingBench;
+            SetOutlineOfInterectable(collision);
         }
+    }
+
+    private void SetNewOutline(OutLineWhenNear outLine)
+    {
+        _outlineNear.PlayerExit();
+        //_outlineNear = 
+    }
+
+    private void SetOutlineOfInterectable(Collider2D collision)
+    {
+        _outlineNear?.PlayerExit();
+        _outlineNear = collision.GetComponent<OutLineWhenNear>();
+        _outlineNear?.PlayerNear();
     }
 
     private void OnTriggerExit2D(Collider2D collision)
     {
         _inputStates = InputStates.Nothing;
-        _materialNear = null;
+        _outlineNear?.PlayerExit();
+        _outlineNear = null;
         if (collision.CompareTag("Shack"))
             _isProtected = false;
     }

@@ -12,7 +12,9 @@ public class PlacementBox : MonoBehaviour
     protected void OnEnable()
     {
         if (_myObject == null)
+        {
             SetComponents(true);
+        }
     }
 
     protected void Start()
@@ -41,5 +43,20 @@ public class PlacementBox : MonoBehaviour
     {
         _collider.enabled = active;
         _sr.enabled = active;
+    }
+
+    public int SetActive(bool state)
+    {
+        //returnAvaible
+        if(_myObject == null)
+        {
+            gameObject.SetActive(state);
+            return 1;
+        }
+        else
+        {
+            gameObject.SetActive(state);
+            return 0;
+        }
     }
 }

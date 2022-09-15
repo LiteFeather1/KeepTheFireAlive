@@ -11,7 +11,7 @@ public class Fence : MonoBehaviour
         Ice ice = collision.gameObject.GetComponent<Ice>();
         if(ice != null)
         {
-            Destroy(ice.gameObject);
+            ice.Die();
             _hp--;
             if(_hp == 0)
             {

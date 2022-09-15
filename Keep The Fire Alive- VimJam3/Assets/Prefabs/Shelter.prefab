@@ -96,7 +96,7 @@ BoxCollider2D:
   m_Enabled: 1
   m_Density: 1
   m_Material: {fileID: 0}
-  m_IsTrigger: 0
+  m_IsTrigger: 1
   m_UsedByEffector: 0
   m_UsedByComposite: 0
   m_Offset: {x: -0.048531473, y: 0.25}
@@ -137,7 +137,7 @@ PolygonCollider2D:
   m_AutoTiling: 0
   m_Points:
     m_Paths:
-    - - {x: 0.3054887, y: -0.3325479}
-      - {x: 0.33134094, y: -0.26254854}
-      - {x: -0.057730198, y: -0.13535847}
-      - {x: -0.13168788, y: -0.18857805}
+    - - {x: 0.29935175, y: -0.28191853}
+      - {x: 0.3512858, y: -0.21959028}
+      - {x: -0.02397728, y: -0.097002864}
+      - {x: -0.08566117, y: -0.17170161}

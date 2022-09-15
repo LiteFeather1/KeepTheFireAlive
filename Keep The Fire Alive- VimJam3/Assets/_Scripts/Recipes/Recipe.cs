@@ -12,13 +12,15 @@ public class Recipe : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler
 
     [Header("Components")]
     [SerializeField] protected Button _button;
+    [SerializeField] protected int _avaibleSpots;
+    protected int _avaibleSpotsForCheck;
     protected bool _isCraftable;
 
     protected InventorySystem InvetorySystem => InventorySystem.Instance;
     protected CraftingManager CraftingManager => GameManager.Instance.CraftingManager;
     protected UiManager UiManager => GameManager.Instance.Ui;
 
-    protected void OnEnable()
+    protected virtual void OnEnable()
     {
         CheckIfCanCraft();
     }
@@ -87,5 +89,15 @@ public class Recipe : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler
     public void OnPointerExit(PointerEventData eventData)
     {
         UiManager.DeactivatePopUpWindow();
+    }
+
+    public void ReturnAvailability(int avaibles)
+    {
+        _avaibleSpotsForCheck = _avaibleSpots;
+        _avaibleSpotsForCheck -= avaibles;
+        if (_avaibleSpotsForCheck < _avaibleSpots)
+            _button.interactable = true;
+        else 
+            _button.interactable = false;
     }
 }

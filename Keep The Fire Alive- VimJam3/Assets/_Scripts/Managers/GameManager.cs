@@ -40,6 +40,7 @@ public class GameManager : MonoBehaviour
     public void GameWon()
     {
         print("Game Won!");
+        UnityEngine.SceneManagement.SceneManager.LoadScene(2);
     }
 
     public void GameLost(string reason)

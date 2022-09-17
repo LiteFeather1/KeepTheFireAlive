@@ -16,7 +16,7 @@ public class FlipBook : MonoBehaviour
     {
         if (_playing)
         {
-            Play(_flipSheet, _flipSheet.FPS, _looping,true);
+            Play();
         }
     }
 
@@ -39,6 +39,11 @@ public class FlipBook : MonoBehaviour
         {
             _playing = false;
         }
+    }
+
+    public void Play()
+    {
+        Play(_flipSheet, _flipSheet.FPS, _looping, true);
     }
     /// <summary>
     /// DefaultFps

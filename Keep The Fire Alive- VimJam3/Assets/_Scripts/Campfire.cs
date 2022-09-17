@@ -141,7 +141,7 @@ public class Campfire : MonoBehaviour
         }
     }
 
-    private void StateChangedToBig()
+    public void StateChangedToBig()
     {
         Play(_bigAnimation);
     }

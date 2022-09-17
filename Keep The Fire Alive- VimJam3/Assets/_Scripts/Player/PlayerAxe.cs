@@ -6,6 +6,7 @@ public class PlayerAxe : MonoBehaviour
 {
     [SerializeField] private int _durability;
     [SerializeField] private InventoryItemUi _inventoryItemUi;
+    [SerializeField] private AudioClip _woodChop;
     private bool _isActive;
     public bool IsActive => _isActive;
 
@@ -28,6 +29,7 @@ public class PlayerAxe : MonoBehaviour
             _durability--;
             tree.Tackle();
             _inventoryItemUi.SetMe(_durability, 16);
+            AudioManager.Instance.PlaySound(_woodChop);
             if (_durability == 0)
             {
                 BreakAxe();

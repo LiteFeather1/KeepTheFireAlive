@@ -102,6 +102,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _myType: 2
   _howMuchToAdd: 1
+  _collect: {fileID: 8300000, guid: 48ebffe60e79ddf458f7bdaf7e2b9891, type: 3}
   _rb: {fileID: 8885736062648736907}
 --- !u!61 &1885022702832430068
 BoxCollider2D:

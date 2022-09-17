@@ -11,7 +11,15 @@ public class ChopTree : MonoBehaviour
     [SerializeField] private Transform _leaves;
     [SerializeField] private float _rotationSpeed;
     [SerializeField] private ParticleSystem _leavesParticles;
+    [Header("Audio")]
+    [SerializeField] private AudioClip _spawn;
+    [SerializeField] private AudioClip _fall;
 
+
+    private void Start()
+    {
+        AudioManager.Instance.PlaySound(_spawn);
+    }
 
     private void Update()
     {
@@ -39,6 +47,7 @@ public class ChopTree : MonoBehaviour
             SpawnWoods();
             StopAllCoroutines();
             Destroy(_leaves.gameObject);
+            AudioManager.Instance.PlaySound(_fall);
         }
         else if (_hp == 0)
         {

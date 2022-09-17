@@ -38,6 +38,10 @@ public class Player : MonoBehaviour
     [SerializeField] private Animator _ac;
     [SerializeField] private Animator _leafAc;
     [SerializeField] private SpriteRenderer _leafSR;
+    [SerializeField] private ParticleSystem _feedParticle;
+
+    [Header("AudioClips")]
+    [SerializeField] private AudioClip _grassWalking;
 
     private InventorySystem _inventorySystem;
     private Campfire _campfire;
@@ -54,6 +58,7 @@ public class Player : MonoBehaviour
 
     private GameManager _gm;
     private Camera _cam;
+    private bool _warned;
     public PlayerAxe PlayerAxe { get => _playerAxe; set => _playerAxe = value; }
 
     public float FireLife
@@ -63,6 +68,13 @@ public class Player : MonoBehaviour
         {
             _fireLife = Mathf.Clamp(value, 0, 100);
             GameManager.Instance.Ui.FireFireDisplay(FireLife);
+            if (_fireLife <= 25 && !_warned)
+            {
+                UiManager.Instance.WarningText("My fire is getting low!", 2f, new Color32(200, 97, 80, 255));
+                _warned = true;
+            }
+            else if (_fireLife > 25 && !_warned)
+                _warned = false;
         }
     }
 
@@ -108,7 +120,7 @@ public class Player : MonoBehaviour
     private void FixedUpdate()
     {
         if(!_axing)
-        Moviment();
+            Moviment();
     }
 
     private void OnDisable()
@@ -185,7 +197,7 @@ public class Player : MonoBehaviour
                 SwingAxe();
                 break;
             case InputStates.NearCampfire:
-                FeedCampfireInput();
+                //FeedCampfireInput();
                 break;
             case InputStates.NearCraftingBench:
                 GameManager.Instance.Ui.SwitchCraftingMenuActive();
@@ -227,7 +239,7 @@ public class Player : MonoBehaviour
     /// </summary>
     private void HitTree()
     {
-        _playerAxe.SwingAxe(_treeNear);
+        _playerAxe.SwingAxe(_treeNear);  
     }
 
     private void PlayAnimation()
@@ -244,7 +256,6 @@ public class Player : MonoBehaviour
     public void ShowLeaf()
     {
         _axing = false;
-        print(_axing);
         _ac.SetBool("Axe", _axing);
         if (_playerHat.IsActive)
             _leafSR.enabled = true;
@@ -359,7 +370,7 @@ public class Player : MonoBehaviour
     {
         if (Wetness >= 100)
         {
-            Die("Wetness");
+            Die("Wetness", "You got too wet!");
         }
     }
 
@@ -367,14 +378,14 @@ public class Player : MonoBehaviour
     {
         if (FireLife <= 0)
         {
-            Die("The fire depleted you");
+            Die("The fire depleted you", "Your fire went out!");
         }
     }
 
-    private void Die(string diedOf)
+    private void Die(string diedOf, string reason)
     {
         print($"Player Died Of {diedOf}");
-        _gm.GameLost();
+        _gm.GameLost(reason);
         Destroy(gameObject);
     }
 
@@ -411,7 +422,7 @@ public class Player : MonoBehaviour
             {
                 FireLife += 5;
             }
-            
+            AudioManager.Instance.PlayFeedSound();
         }
     }
 
@@ -432,6 +443,50 @@ public class Player : MonoBehaviour
         }
     }
 
+    public void ButtonFeedMeWood()
+    {
+        if (_inputStates == InputStates.Nothing)
+        {
+            FeedMe(Materials.Wood);
+            SpeedOfParticles(Materials.Wood);
+        }
+    }
+
+    public void ButtonFeedMeGrass()
+    {
+        if (_inputStates == InputStates.Nothing)
+        {
+            FeedMe(Materials.Grass);
+            SpeedOfParticles(Materials.Grass);
+        }
+    }
+
+    private void SpeedOfParticles(Materials materialsToPlay)
+    {
+        float velocity = 0;
+        float quantity = 0;
+        if (materialsToPlay == Materials.Wood)
+        {
+            velocity = 1;
+            quantity = 75;
+        }
+        else
+        {
+            velocity = .5f;
+            quantity = 50f;
+        }
+        var velocityModule = _feedParticle.velocityOverLifetime;
+        velocityModule.speedModifier = velocity;
+        var emmision = _feedParticle.emission;
+        emmision.rateOverTime = quantity;
+        _feedParticle.Play();
+    }
+    // Animation Event
+    private void PlayGrassSound()
+    {
+        AudioManager.Instance.PlaySound(_grassWalking);
+    }
+
     private void Limit()
     {
         float yLimit = _cam.orthographicSize - _triggerCollider.radius;
@@ -444,18 +499,6 @@ public class Player : MonoBehaviour
             transform.position = new Vector2(transform.position.x, yLimit);
         else if (transform.position.y < -yLimit)
             transform.position = new Vector2(transform.position.x, -yLimit);
-    }
-
-    public void ButtonFeedMeWood()
-    {
-        if (_inputStates == InputStates.Nothing)
-            FeedMe(Materials.Wood);
-    }
-
-    public void ButtonFeedMeGrass()
-    {
-        if (_inputStates == InputStates.Nothing)
-            FeedMe(Materials.Grass);
     }
 
     private void OnCollisionEnter2D(Collision2D collision)

@@ -3,12 +3,12 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 using TMPro;
-using System;
 
 public class UiManager : MonoBehaviour
 {
     [Header("Screens")]
     [SerializeField] private GameObject _craftingScreen;
+    [SerializeField] private GameObject _pauseScreen;
 
     [Header("PopUp Window")]
     [SerializeField] private RectTransform _popUpWindow;
@@ -26,7 +26,7 @@ public class UiManager : MonoBehaviour
     [SerializeField] private Image _fireFire;
     [SerializeField] private Image _fireWetness;
 
-    private static UiManager Instance => GameManager.Instance.Ui;
+    public static UiManager Instance => GameManager.Instance.Ui;
 
     private void Update()
     {
@@ -37,23 +37,37 @@ public class UiManager : MonoBehaviour
                 DeactivatePopUpWindow();
                 Time.timeScale = 1;
             }
+            else
+            {
+                if (Time.timeScale == 1)
+                {
+                    Time.timeScale = 0;
+                    _pauseScreen.SetActive(true);
+                }
+                else
+                {
+                    Time.timeScale = 1;
+                    _pauseScreen.SetActive(false);;
+                }
+            }
     }
 
     public void TimeToDisplay(float time)
     {
         float minutes = Mathf.FloorToInt(time / 60);
         float seconds = Mathf.FloorToInt(time % 60);
-        _time.text = "Time : " + $"{Environment.NewLine}{string.Format("{0:00} : {1:00}", minutes, seconds)}";
+        _time.text = "Time : " + $"{System.Environment.NewLine}{string.Format("{0:00} : {1:00}", minutes, seconds)}";
     }
 
     public void SwitchCraftingMenuActive()
     {
         bool active = _craftingScreen.activeInHierarchy;
         _craftingScreen.SetActive(!active);
+        _pauseScreen.SetActive(!active);
         if (!active)
         {
             Time.timeScale = 0;
-            GameManager.Instance.CraftingManager.Check();
+            CraftingManager.Instance.Check();
         }
     }
 

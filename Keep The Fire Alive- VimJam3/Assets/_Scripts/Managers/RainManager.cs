@@ -27,5 +27,6 @@ public class RainManager : MonoBehaviour
         _rainStarted?.Invoke(_rainingStrength);
         _rainParticle.Play();
         GameManager.Instance.Ui.WarningText("Rain started careful not to get too Wet!", 5, new Color32(92, 105, 169, 255));
+        AudioManager.Instance.PlayRainSound();
     }
 }

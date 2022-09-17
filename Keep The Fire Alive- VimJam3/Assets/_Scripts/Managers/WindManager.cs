@@ -12,8 +12,9 @@ public class WindManager : MonoBehaviour
     private float _windPassingTime;
     public Action<float, float> _windEvent;
     [SerializeField] private ParticleSystem _windParticle;
+    [SerializeField] private AudioClip _windGust;
 
-    private static WindManager Instance => GameManager.Instance.WindManager;
+    public static WindManager Instance => GameManager.Instance.WindManager;
 
     public Action<float, float> WindEvent { get => _windEvent; set => _windEvent = value; }
 
@@ -36,6 +37,7 @@ public class WindManager : MonoBehaviour
             _timeToBlow = UnityEngine.Random.Range(_minTimeToBlow, _maxTimeToBlow);
             _windEvent?.Invoke(_minWindStrength, _maxWindStrength);
             _windParticle.Play();
+            AudioManager.Instance.PlaySound(_windGust);
         }
     }
 }

@@ -4994,6 +4994,8 @@ MonoBehaviour:
   _leaves: {fileID: 3499689058353303758}
   _rotationSpeed: 5
   _leavesParticles: {fileID: 3499689058185680846}
+  _spawn: {fileID: 8300000, guid: 2ae88086bb64d3a48a18adb518f48cbf, type: 3}
+  _fall: {fileID: 8300000, guid: eb3d855e1bdd04442bb1ea0dc34c64a2, type: 3}
 --- !u!212 &3499689059056474802
 SpriteRenderer:
   m_ObjectHideFlags: 0

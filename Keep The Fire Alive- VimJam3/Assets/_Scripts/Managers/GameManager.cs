@@ -42,8 +42,11 @@ public class GameManager : MonoBehaviour
         print("Game Won!");
     }
 
-    public void GameLost()
+    public void GameLost(string reason)
     {
         print("Game Lost!");
+        Utils.EndGameLostText = reason;
+        Utils.TimeLeft = $"Time Left {Mathf.FloorToInt(_timeToWin / 60)} : {Mathf.FloorToInt(_timeToWin % 60): 00}";
+        UnityEngine.SceneManagement.SceneManager.LoadScene(1);
     }
 }

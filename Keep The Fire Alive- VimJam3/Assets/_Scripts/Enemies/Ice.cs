@@ -7,8 +7,11 @@ public class Ice : MonoBehaviour
 {
     [SerializeField] private float _speed;
     [SerializeField] private Rigidbody2D _rb;
+    [SerializeField] private Collider2D _collider;
+    [SerializeField] private ParticleSystem _deathParticle;
     [SerializeField] private FlipBook _animator;
     [SerializeField] private FlipSheet _deadAnimation;
+    [SerializeField] private AudioClip _deadSound;
 
     private Vector2 _campFirePos;
 
@@ -34,6 +37,12 @@ public class Ice : MonoBehaviour
     {
         _animator.Play(_deadAnimation, false, true);
         StartCoroutine(Dieco());
+        _campFirePos = transform.position;
+        _collider.isTrigger = true;
+        _rb.velocity = Vector2.zero;
+        _rb.isKinematic = true;
+        _deathParticle.Play();
+        AudioManager.Instance.PlaySound(_deadSound,1f);
     }
 
     private IEnumerator Dieco()

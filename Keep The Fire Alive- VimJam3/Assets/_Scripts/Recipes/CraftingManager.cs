@@ -24,11 +24,17 @@ public class CraftingManager : MonoBehaviour
 
     private System.Action _spawnAction;
 
-    private static CraftingManager Instance => GameManager.Instance.CraftingManager;
+    public static CraftingManager Instance => GameManager.Instance.CraftingManager;
 
     private void Start()
     {
         DeactivatePlacementBoxes();
+    }
+
+    private void Update()
+    {
+        if (Input.GetKeyDown(KeyCode.Escape))
+            DeactivatePlacementBoxes();
     }
 
     private void PlacementBoxesToActivate(PlaceableTypes type)

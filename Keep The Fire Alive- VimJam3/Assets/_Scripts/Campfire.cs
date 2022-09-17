@@ -9,6 +9,7 @@ public class Campfire : MonoBehaviour
     [SerializeField] private float _life = 100;
     [SerializeField] private float _depleteRate = 1f;
     private float _rainingMultiplier = 1;
+
     private enum FireState { Big = 0, Medium = 1, Small = 2, AlmostDead = 3, Dead = 4}
     private FireState _fireState = FireState.Big;
     private FireState _previousFireState = FireState.Big;
@@ -29,8 +30,25 @@ public class Campfire : MonoBehaviour
     [SerializeField] private FlipSheet _mediumAnimation;
     [SerializeField] private FlipSheet _smallAnimation;
     [SerializeField] private FlipSheet _almostAnimation;
+    [SerializeField] private ParticleSystem _feedParticle;
+
+    private bool _warned;
 
     public static Campfire Instance { get; private set; }
+    public float Life
+    {
+        get => _life; set
+        {
+            _life = Mathf.Clamp(value, 0, 125f);
+            if (_life <= 25 && !_warned)
+            {
+                UiManager.Instance.WarningText("Baby.. my fire is...", 3f, new Color32(200, 97, 80, 255));
+                _warned = true;
+            }
+            else if (_life > 25 && !_warned)
+                _warned = false;
+        }
+    }
 
     private GameManager _gm;
 
@@ -65,14 +83,14 @@ public class Campfire : MonoBehaviour
 
     private void DepleteFire()
     {
-        if (_life >= 0)
-            _life -= Time.deltaTime * _rainingMultiplier * _depleteRate;
+        if (Life >= 0)
+            Life -= Time.deltaTime * _rainingMultiplier * _depleteRate;
         WhatStateAreWe();
     }
 
     private void WhatStateAreWe()
     {
-        switch (_life)
+        switch (Life)
         {
             case <= 0:
                 _fireState = FireState.Dead;
@@ -146,12 +164,11 @@ public class Campfire : MonoBehaviour
     private void StateChangedToDead()
     {
         _animator.gameObject.SetActive(false);
-        _gm.GameLost();
+        _gm.GameLost("Yours Moms fire went out");
     }
 
     private void HandleLights()
     {
-        //_bigLight.pointLightOuterRadius = _bigRadiousPerState[(int)_fireState];
         _timePassed += Time.deltaTime * 1f * _rate;
         _bigLight.pointLightOuterRadius = Mathf.Lerp(_minBigRadiousPerState[(int)_fireState], _bigRadiousPerState[(int)_fireState],Mathf.PingPong(_timePassed,1));
         _smallLight.pointLightOuterRadius = Mathf.Lerp(_minSmallRadiousPerState[(int)_fireState], _smallRadiousPerState[(int)_fireState], Mathf.PingPong(_timePassed * 2, 1));
@@ -165,23 +182,65 @@ public class Campfire : MonoBehaviour
 
     private void IsRaining(float rainStrength)
     {
-        _rainingMultiplier = 2;
+        _rainingMultiplier = rainStrength;
     }
 
     public void FeedMe(Materials materialToFeed)
     {
         if(materialToFeed == Materials.Wood)
         {
-            _life += 10;
+            Life += 10;
         }
         else if(materialToFeed == Materials.Grass)
         {
-            _life += 5f;
+            Life += 5f;
         }
+
+        SpeedOfParticles(materialToFeed);
+        AudioManager.Instance.PlayFeedSound();
+    }
+
+
+    private void SpeedOfParticles(Materials materialsToPlay)
+    {
+        float velocity;
+        switch (_fireState)
+        {
+            case FireState.Big:
+                velocity = 1;
+                break;
+            case FireState.Medium:
+                velocity = .75f;
+                break;
+            case FireState.Small:
+                velocity = .5f;
+                break;
+            case FireState.AlmostDead:
+                velocity = .25f;
+                break;
+            case FireState.Dead:
+                velocity = .0f;
+                break;
+            default:
+                velocity = .0f;
+                break;
+        }
+        var velocityModule = _feedParticle.velocityOverLifetime;
+        velocityModule.speedModifier = velocity;
+
+        float quantity;
+        if (materialsToPlay == Materials.Wood)
+            quantity = 50;
+        else
+            quantity = 20f;
+        var emmision = _feedParticle.emission;
+        emmision.rateOverTime = quantity;
+
+        _feedParticle.Play();
     }
 
     public void StealFire()
     {
-        _life -= 10;
+        Life -= 10;
     }
 }

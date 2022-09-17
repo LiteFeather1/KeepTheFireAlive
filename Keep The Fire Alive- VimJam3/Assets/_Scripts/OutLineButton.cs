@@ -1,20 +1,25 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.EventSystems;
 using UnityEngine.UI;
 
-public class OutLineButton : MonoBehaviour
+public class OutLineButton : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler
 {
-
+    [SerializeField] private Button _button;
     [SerializeField] private Outline _outline;
 
-    private void OnMouseEnter()
+    public void OnPointerExit(PointerEventData eventData)
     {
-        _outline.enabled = true;
+        if(_button.IsInteractable())
+        _outline.enabled = false;
     }
 
-    public void OnMouseExit()
+    public void OnPointerEnter(PointerEventData eventData)
     {
-        _outline.enabled = false;
+        if (_button.IsInteractable())
+            _outline.enabled = true;
+        if (!_button.IsInteractable())
+            _outline.enabled = false;
     }
 }

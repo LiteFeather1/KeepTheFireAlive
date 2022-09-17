@@ -5,7 +5,7 @@ using UnityEngine;
 public class PlayerHat : MonoBehaviour
 {
     [SerializeField] private float _durability;
-    private float _isolationStrength = 2f;
+    [SerializeField] private float _isolationStrength = 2f;
     private float _depleteRate = .5f;
     private bool _isActive;
 

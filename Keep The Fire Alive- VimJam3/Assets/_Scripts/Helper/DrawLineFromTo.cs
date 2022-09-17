@@ -7,7 +7,7 @@ public class DrawLineFromTo : MonoBehaviour
     [SerializeField] private Transform _from;
     [SerializeField] private Transform _to;
 
-    private void OnDrawGizmos()
+    private void OnDrawGizmosSelected()
     {
         if (_from == null || _to == null)
             return;

@@ -5,11 +5,15 @@ using UnityEngine;
 
 public class Hand : MonoBehaviour
 {
-    [SerializeField] private float _speed = 1;
+    [SerializeField] private float _speed = .25f;
+    private float _startSpeed;
 
     [SerializeField] private BoxCollider2D _collider;
     [SerializeField] private SpriteRenderer _sr;
-    private bool _stoleFire;
+    [SerializeField] private Sprite _open;
+    [SerializeField] private Sprite _closed;
+    [SerializeField] private Transform _light; 
+    private bool _fireStole;
     private bool _playerAbove;
 
     private Vector2 _position;
@@ -18,12 +22,18 @@ public class Hand : MonoBehaviour
 
     private Vector3 _campfirePos;
 
+    private static int _handCount = 0;
+
     private void Start()
     {
+        _handCount++;
+        if (_handCount > 0)
+            AudioManager.Instance.PlayCreepySound();
+        _startSpeed = _speed;
         SetRotation();
         _position = transform.position;
         _directionOffSet = (transform.position - _campfirePos).normalized;
-        _position -= _collider.size * _directionOffSet;
+        _position -= _collider.size * _directionOffSet / 2;
         _startPos = transform.position;
     }
 
@@ -32,24 +42,35 @@ public class Hand : MonoBehaviour
         Moviment();
         CheckIfCanStealFire();
         CheckIfDespawn();
+        _light.position = new Vector2(_position.x + 0.14f, _position.y + 0.12f);
+    }
+
+    private void OnDisable()
+    {
+        _handCount--;
+        if (_handCount <= 0)
+            if(AudioManager.Instance != null)
+                AudioManager.Instance.StopCreepySound();
     }
 
     private void CheckIfCanStealFire()
     {
-        if (Vector2.Distance(_position, _campfirePos) < 0.1f)
+        if (Vector2.Distance(_position, _campfirePos) < 0.01f)
         {
-            _speed = -2;
+            _speed = -3;
             Campfire.Instance.StealFire();
-            _stoleFire = true;
+            _fireStole = true;
+            _sr.sprite = _closed;
+            _light.gameObject.SetActive(true);
             print("Stole Fire");
         }
     }
 
     private void CheckIfDespawn()
     {
-        if(Vector2.Distance(_position, _startPos) < 0.5f)
+        if(Vector2.Distance(_position, _startPos) < 1f)
         {
-            if (_playerAbove)
+            if (_playerAbove || _fireStole) 
                 Destroy(gameObject);
         }
     }
@@ -78,19 +99,32 @@ public class Hand : MonoBehaviour
 
     private void OnTriggerEnter2D(Collider2D collision)
     {
-        if (collision.CompareTag("Player") && !_stoleFire)
+        if (collision.CompareTag("Player") && !_fireStole)
         {
-            _speed *= -1;
+            _speed = -1.25f;
             _playerAbove = true;
+            _sr.sprite = _closed;
+            StopAllCoroutines();
         }
     }
 
     private void OnTriggerExit2D(Collider2D collision)
     {
-        if (collision.CompareTag("Player") && !_stoleFire)
+        if (collision.CompareTag("Player") && !_fireStole)
         {
-            _speed *= -1;
             _playerAbove = false;
+            StartCoroutine(Backing());
+        }
+    }
+
+    private IEnumerator Backing()
+    {
+        if (_playerAbove == false)
+        {
+            _speed = 0;
+            yield return new WaitForSeconds(1f);
+            _speed = _startSpeed;
+            _sr.sprite = _open;
         }
     }
 }

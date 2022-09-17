@@ -25,16 +25,6 @@ public class Recipe : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler
         CheckIfCanCraft();
     }
 
-    protected void OnMouseEnter()
-    {
-        print("Mouse");
-    }
-
-    protected void OnMouseExit()
-    {
-        UiManager.DeactivatePopUpWindow();
-    }
-
     protected void CheckIfCanCraft()
     {
         int checksNeeded = _items.Length;
@@ -70,6 +60,7 @@ public class Recipe : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler
         }
         Debug.Log("Crafted");
         Time.timeScale = 1;
+        AudioManager.Instance.PlayCraftedSound();
     }
 
     /// <summary>

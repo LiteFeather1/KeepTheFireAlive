@@ -10,7 +10,6 @@ public class InventoryPopUpText : MonoBehaviour, IPointerEnterHandler, IPointerE
 
     public void OnPointerEnter(PointerEventData eventData)
     {
-        print("hell");
         GameManager.Instance.Ui.DisplayInventoryFeed(_player.InventoryPopUpText(_material));
     }
 

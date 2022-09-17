@@ -7,6 +7,7 @@ public class MaterialItem : MonoBehaviour
 {
     [SerializeField] private Materials _myType;
     [SerializeField] private int _howMuchToAdd = 1;
+    [SerializeField] private AudioClip _collect;
 
     [Header("Wind")]
     [SerializeField] private Rigidbody2D _rb;
@@ -26,6 +27,7 @@ public class MaterialItem : MonoBehaviour
     {
         InventorySystem.Instance.AddItem(_myType, _howMuchToAdd);
         Destroy(gameObject);
+        AudioManager.Instance.PlaySound(_collect);
     }
 
     private void Blow(float min, float max)

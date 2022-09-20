@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class ChopTree : MonoBehaviour
 {
-    [SerializeField] private int _hp = 12;
+    [SerializeField] private int _hp = 4;
     [SerializeField] private int _amountToSpawn = 3;
     [SerializeField] private Rigidbody2D _woodPrefab;
 
@@ -21,17 +21,10 @@ public class ChopTree : MonoBehaviour
         AudioManager.Instance.PlaySound(_spawn);
     }
 
-    private void Update()
-    {
-        if(Input.GetKeyDown(KeyCode.K))
-        {
-
-        }
-    }
     public void Tackle()
     {
         _hp--;
-        if (_hp >= 3)
+        if (_hp >= 2)
         {
             StopAllCoroutines();
             StartCoroutine(Wiggle(_leaves));
@@ -42,7 +35,7 @@ public class ChopTree : MonoBehaviour
             StopAllCoroutines();
             StartCoroutine(Wiggle(transform));
         }
-        if (_hp == 3)
+        if (_hp == 2)
         {
             SpawnWoods();
             StopAllCoroutines();
@@ -72,9 +65,9 @@ public class ChopTree : MonoBehaviour
 
     private IEnumerator Wiggle(Transform transform)
     {
-        float rotationGoal = 0;
-        Quaternion goal = Quaternion.Euler(0, 0, rotationGoal);
-        float time = 0;
+        float rotationGoal;
+        Quaternion goal;
+        float time ;
         float minRotation = 1.41875f;
         float maxRotation = 2.8375f;
         for (int i = 0; i < 3; i++)
@@ -82,7 +75,7 @@ public class ChopTree : MonoBehaviour
             rotationGoal = Random.Range(minRotation, maxRotation);
             goal = Quaternion.Euler(0, 0, rotationGoal);
             time = 0;
-            while (!compare(transform.rotation, goal, 1))
+            while (!Compare(transform.rotation, goal, 1))
             {
                 time += Time.deltaTime;
                 transform.rotation = Quaternion.Lerp(transform.rotation, goal, time * _rotationSpeed);
@@ -92,7 +85,7 @@ public class ChopTree : MonoBehaviour
             time = 0;
             rotationGoal = Random.Range(minRotation, maxRotation) * -1;
             goal = Quaternion.Euler(0, 0, rotationGoal);
-            while (!compare(transform.rotation, goal, 1))
+            while (!Compare(transform.rotation, goal, 1))
             {
 
                 time += Time.deltaTime;
@@ -102,7 +95,7 @@ public class ChopTree : MonoBehaviour
         }
         time = 0;
         goal = Quaternion.Euler(Vector3.zero);
-        while (!compare(transform.rotation, goal, 1))
+        while (!Compare(transform.rotation, goal, 1))
         {
             time += Time.deltaTime;
             transform.rotation = Quaternion.Lerp(transform.rotation, goal, time * _rotationSpeed);
@@ -116,7 +109,7 @@ public class ChopTree : MonoBehaviour
         return 1 - Mathf.Abs(Quaternion.Dot(quatA, value)) < acceptableRange;
     }
 
-    private bool compare(Quaternion quatA, Quaternion quatB , float range)
+    private bool Compare(Quaternion quatA, Quaternion quatB , float range)
     {
         return Quaternion.Angle(quatA, quatB) < range;
 }

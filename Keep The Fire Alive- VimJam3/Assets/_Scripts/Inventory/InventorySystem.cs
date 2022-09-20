@@ -6,10 +6,11 @@ using UnityEditor;
 
 public class InventorySystem : MonoBehaviour
 {
+    [SerializeField] private int _startItens;
     private Dictionary<Materials, int> _inventory; 
 
     [SerializeField] private InventoryMaterialUi[] _inventoryMaterialUi;
-    private Dictionary<Materials, InventoryMaterialUi> _materialToInventoryUi = new(); 
+    private readonly Dictionary<Materials, InventoryMaterialUi>  _materialToInventoryUi = new(); 
     public static InventorySystem Instance;
 
     public Dictionary<Materials, int> Inventory { get => _inventory; set => _inventory = value; }
@@ -33,7 +34,7 @@ public class InventorySystem : MonoBehaviour
 
         for (int i = 0; i < enumSize; i++)
         {
-            _inventory.Add((Materials)i, 0);
+            _inventory.Add((Materials)i, _startItens);
             _materialToInventoryUi.Add((Materials)i, _inventoryMaterialUi[i]);
             _materialToInventoryUi[(Materials)i].SetMe(_inventory[(Materials)i]);
         }

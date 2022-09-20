@@ -12,9 +12,9 @@ public class Recipe : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler
 
     [Header("Components")]
     [SerializeField] protected Button _button;
+    [SerializeField] protected Image _icon;
     [SerializeField] protected int _avaibleSpots;
     protected int _avaibleSpotsForCheck;
-    protected bool _isCraftable;
 
     protected InventorySystem InvetorySystem => InventorySystem.Instance;
     protected CraftingManager CraftingManager => GameManager.Instance.CraftingManager;
@@ -22,10 +22,10 @@ public class Recipe : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler
 
     protected virtual void OnEnable()
     {
-        CheckIfCanCraft();
+        //CheckIfCanCraft();
     }
 
-    protected void CheckIfCanCraft()
+    protected bool CheckIfCanCraft()
     {
         int checksNeeded = _items.Length;
         for (int i = 0; i < _items.Length; i++)
@@ -36,15 +36,13 @@ public class Recipe : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler
 
         if (checksNeeded == 0)
         {
-            _isCraftable = true;
+            return true;
         }
         else
         {
-            _isCraftable = false;
-            Debug.Log("Insuficient Materials");
+            //Debug.Log("Insuficient Materials " + gameObject.name);
+            return false;
         }
-
-        _button.interactable = _isCraftable;
     }
 
     protected void RemoveMaterialsOfInventory(Materials item, int amountToRemove)
@@ -77,7 +75,18 @@ public class Recipe : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler
         UiManager.ActivatePopUpWindow(_button.GetComponent<RectTransform>(), _items, _amountNecessary, _description);
     }
 
+    public void OnMouseEnter()
+    {
+        print("enter");
+        UiManager.ActivatePopUpWindow(_button.GetComponent<RectTransform>(), _items, _amountNecessary, _description);
+    }
+
     public void OnPointerExit(PointerEventData eventData)
+    {
+        UiManager.DeactivatePopUpWindow();
+    }
+
+    public void OnMouseExit()
     {
         UiManager.DeactivatePopUpWindow();
     }
@@ -86,9 +95,15 @@ public class Recipe : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler
     {
         _avaibleSpotsForCheck = _avaibleSpots;
         _avaibleSpotsForCheck -= avaibles;
-        if (_avaibleSpotsForCheck < _avaibleSpots)
+        if (_avaibleSpotsForCheck < _avaibleSpots && CheckIfCanCraft())
+        {
             _button.interactable = true;
-        else 
+            _icon.color = Color.white;
+        }
+        else
+        {
             _button.interactable = false;
+            _icon.color = new Color(1, 1, 1, 0.5f);
+        }
     }
 }

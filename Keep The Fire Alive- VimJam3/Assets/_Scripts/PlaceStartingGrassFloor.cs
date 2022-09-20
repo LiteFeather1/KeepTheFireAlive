@@ -12,8 +12,8 @@ public class PlaceStartingGrassFloor : MonoBehaviour
 
     private void Start()
     {
-        float height = Utils.MainCamera.orthographicSize * 6.25f;
-        float width = height / 9 * 16;
+        float height = 1.9f * 6.25f;
+        float width = height / 9 * 16; 
 
         int howMany = Random.Range(_minHowManyToPlace, _maxHowManyToPlace);
         for (int i = 0; i < howMany; i++)

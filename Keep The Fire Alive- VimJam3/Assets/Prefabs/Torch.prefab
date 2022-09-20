@@ -54,7 +54,7 @@ MonoBehaviour:
   m_LightType: 3
   m_BlendStyleIndex: 0
   m_FalloffIntensity: 0.5
-  m_Color: {r: 1, g: 0.6627451, b: 0.38039216, a: 1}
+  m_Color: {r: 1, g: 0.6658897, b: 0.3820755, a: 1}
   m_Intensity: 1
   m_LightVolumeIntensity: 1
   m_LightVolumeIntensityEnabled: 0
@@ -105,7 +105,7 @@ MonoBehaviour:
     m_Extent: {x: 0.9985302, y: 0.99853027, z: 0}
   m_PointLightInnerAngle: 360
   m_PointLightOuterAngle: 360
-  m_PointLightInnerRadius: 0
+  m_PointLightInnerRadius: 0.12
   m_PointLightOuterRadius: 1
   m_ShapeLightParametricSides: 5
   m_ShapeLightParametricAngleOffset: 0
@@ -137,6 +137,7 @@ MonoBehaviour:
   - 0.5
   - 0.25
   _light: {fileID: 771481095915772286}
+  _breakingSound: {fileID: 8300000, guid: f68b0d5fd090b6e4cb3274c4cf3b7132, type: 3}
 --- !u!58 &771481095915772283
 CircleCollider2D:
   m_ObjectHideFlags: 0
@@ -152,7 +153,7 @@ CircleCollider2D:
   m_UsedByComposite: 0
   m_Offset: {x: 0, y: 0}
   serializedVersion: 2
-  m_Radius: 1
+  m_Radius: 0.75
 --- !u!114 &771481095915772286
 MonoBehaviour:
   m_ObjectHideFlags: 0

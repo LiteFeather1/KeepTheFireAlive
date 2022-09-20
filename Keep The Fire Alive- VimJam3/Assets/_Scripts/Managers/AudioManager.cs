@@ -13,13 +13,21 @@ public class AudioManager : MonoBehaviour
     [SerializeField] private AudioClip _craftSound;
     [SerializeField] private AudioClip _feedSound;
 
-    public static AudioManager Instance => GameManager.Instance.AudioManager;
-
+    public static AudioManager Instance { get; private set; }
     public float Volume { get => _volume; set => _volume = Mathf.Clamp(value, 0, 1); }
+
+
+    private void Start()
+    {
+        if (Instance == null)
+            Instance = this;
+        else
+            Destroy(gameObject);
+    }
 
     private void Update()
     {
-        if(Input.GetKeyDown(KeyCode.M))
+        if (Input.GetKeyDown(KeyCode.M))
         {
             _muted = !_muted;
             if (_muted)
@@ -28,12 +36,13 @@ public class AudioManager : MonoBehaviour
                 AudioListener.volume = Volume;
         }
 
-        if(Input.GetKeyDown(KeyCode.Plus) || Input.GetKeyDown(KeyCode.KeypadPlus))
+        if (Input.GetKeyDown(KeyCode.Plus) || Input.GetKeyDown(KeyCode.KeypadPlus))
         {
             _volume += 0.1f;
             if (!_muted)
                 AudioListener.volume = _volume;
         }
+
         else if (Input.GetKeyDown(KeyCode.Minus) || Input.GetKeyDown(KeyCode.KeypadMinus))
         {
             _volume -= 0.1f;
@@ -41,14 +50,19 @@ public class AudioManager : MonoBehaviour
                 AudioListener.volume = _volume;
         }
     }
+
     public void PlaySound(AudioClip clip)
     {
-        _effectSound.PlayOneShot(clip);
+        if (clip != null)
+            _effectSound.PlayOneShot(clip);
+        else
+            print("Sound was null");
     }
 
     public void PlaySound(AudioClip clip, float volume)
     {
-        _effectSound.PlayOneShot(clip, volume);
+        if (clip != null)
+            _effectSound.PlayOneShot(clip, volume);
     }
 
     public void PlayCreepySound()
@@ -71,8 +85,8 @@ public class AudioManager : MonoBehaviour
         PlaySound(_craftSound);
     }
 
-    public void PlayFeedSound()
+    public void PlayFeedSound(float volume)
     {
-        PlaySound(_feedSound);
+        PlaySound(_feedSound, volume);
     }
 }

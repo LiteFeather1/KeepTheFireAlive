@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -17,10 +18,13 @@ public class Player : MonoBehaviour
     [SerializeField] private float _wetness;
     [SerializeField] private float _isolationStrength;
     [SerializeField] private float _loseWetRate;
+    private float _startLoseRate;
     [SerializeField] private bool _isProtected;
 
     [Header("Equipeables")]
     [SerializeField] private InputStates _inputStates;
+    private InputStates _previousInputState;
+    private System.Action _invetoryUi;
     [SerializeField] private PlayerAxe _playerAxe;
     [SerializeField] private PlayerHat _playerHat;
 
@@ -58,8 +62,8 @@ public class Player : MonoBehaviour
 
     private GameManager _gm;
     private Camera _cam;
-    private bool _warned;
     public PlayerAxe PlayerAxe { get => _playerAxe; set => _playerAxe = value; }
+    private bool _warned;
 
     public float FireLife
     {
@@ -73,19 +77,29 @@ public class Player : MonoBehaviour
                 UiManager.Instance.WarningText("My fire is getting low!", 2f, new Color32(200, 97, 80, 255));
                 _warned = true;
             }
-            else if (_fireLife > 25 && !_warned)
+            else if (_fireLife > 25 && _warned)
                 _warned = false;
         }
     }
 
+    private bool _wetWarned;
     public float Wetness
     {
         get => _wetness; set
         {
             _wetness = Mathf.Clamp(value, 0, 100);
             GameManager.Instance.Ui.FireWetnessDisplay(_wetness);
+            if (_wetness >= 75 && !_wetWarned)
+            {
+                UiManager.Instance.WarningText("You Are getting too wet Come near baby", 2f, new Color32(92, 105, 169, 255));
+                _wetWarned = true;
+            }
+            else if (_wetness < 75 && _wetWarned)
+                _wetWarned = false;
         }
     }
+
+    public Action InvetoryUi { get => _invetoryUi; set => _invetoryUi = value; }
 
     private void Awake()
     {
@@ -106,6 +120,7 @@ public class Player : MonoBehaviour
         _inventorySystem = InventorySystem.Instance;
         _campfire = Campfire.Instance;
         _cam = Camera.main;
+        _startLoseRate = _loseWetRate;
     }
 
     private void Update()
@@ -115,6 +130,10 @@ public class Player : MonoBehaviour
         DepleteFire();
         Limit();
         DepleteWetness();
+        if (Input.GetKeyDown(KeyCode.Return) || Input.GetKeyDown(KeyCode.KeypadEnter) && _axing)
+            ShowLeaf();
+        EventFromMotherToMeAndVersa();
+        PreviousInputState();
     }
 
     private void FixedUpdate()
@@ -180,10 +199,49 @@ public class Player : MonoBehaviour
 
     private void Inputs()
     {
-        if (Input.GetKeyDown(KeyCode.Space))
+        if (Input.GetKeyDown(KeyCode.Space) || Input.GetKeyDown(KeyCode.Mouse0))
+
         {
             InputAction();
         }
+
+        if (Input.GetKeyDown(KeyCode.Alpha1))
+        {
+            if (_inputStates == InputStates.NearCampfire)
+            {
+                FeedCampfireMaterial(Materials.Wood);
+            }
+            else
+            {
+                FeedMe(Materials.Wood);
+            }
+        }
+        else if(Input.GetKeyDown(KeyCode.Alpha2))
+        {
+            if (!_dislayingCantEat)
+                StartCoroutine(CantEatRocks());
+        }
+        else  if(Input.GetKeyDown(KeyCode.Alpha3))
+        {
+            if(_inputStates == InputStates.NearCampfire)
+            {
+                FeedCampfireMaterial(Materials.Grass);
+            }
+            else
+            {
+                FeedMe(Materials.Grass);
+            }
+        }
+    }
+
+    private bool _dislayingCantEat;
+    private IEnumerator CantEatRocks()
+    {
+        _dislayingCantEat = true;
+        UiManager.Instance.DisplayInventoryFeed(InventoryPopUpText(Materials.Stone));
+        yield return new WaitForSeconds(1f);
+        UiManager.Instance.HideInventoryFeed();
+        _dislayingCantEat = false;
     }
 
     private void InputAction()
@@ -212,6 +270,31 @@ public class Player : MonoBehaviour
         _triggerCollider.enabled = true;
     }
 
+
+    private void PreviousInputState()
+    {
+        if(_previousInputState != _inputStates)
+        {
+            //Something
+            UpdateLoseWetRate();
+        }
+        _previousInputState = _inputStates;
+    }
+
+    private void EventFromMotherToMeAndVersa()
+    {
+        if (_inputStates == InputStates.Nothing && _previousInputState == InputStates.NearCampfire)
+        {
+            print("invoked");
+            _invetoryUi?.Invoke();
+        }
+        else if (_inputStates == InputStates.NearCampfire && _previousInputState == InputStates.Nothing)
+        {
+            print("invoked");
+            _invetoryUi?.Invoke();
+        }
+    }
+
     private void CollectMaterial()
     {
         if (_materialNear != null)
@@ -222,7 +305,7 @@ public class Player : MonoBehaviour
     {
         if (PlayerAxe.IsActive)
         {
-            if (_treeNear != null)
+            if (_treeNear != null && !_axing)
             {
                 PlayAnimation();
             }
@@ -248,6 +331,15 @@ public class Player : MonoBehaviour
         _rb.velocity = Vector2.zero;
         _ac.SetBool("Axe", _axing);
         _leafSR.enabled = false;
+        StartCoroutine(ExitAxingAnimation());
+    }
+
+    IEnumerator ExitAxingAnimation()
+    {
+        yield return new WaitForSeconds(0.4f);
+        HitTree();
+        yield return new WaitForSeconds(0.125f);
+        ShowLeaf();
     }
 
     /// <summary>
@@ -393,19 +485,29 @@ public class Player : MonoBehaviour
     {
         float wetnessMultiplier = Mathf.Lerp(1, 2, Wetness / 100);
 
-        float depleteRate = Time.deltaTime / _depleteRate * wetnessMultiplier;
+        float depleteRate = Time.deltaTime * _depleteRate * wetnessMultiplier;
 
         FireLife -= depleteRate;
     }
 
-    private void DepleteWetness()
+    private void UpdateLoseWetRate()
     {
         if (_inputStates == InputStates.NearCampfire)
         {
-            if (Wetness > 0)
-            {
-                Wetness -= _loseWetRate * Time.deltaTime;
-            }
+            _loseWetRate = _startLoseRate;
+        }
+        else
+        {
+            _loseWetRate = _startLoseRate / 4;
+        }
+    }
+
+    private void DepleteWetness()
+    { 
+        if (Wetness > 0)
+        {
+            float protectedShelter = _isProtected ? 4 : 1;
+            Wetness -= _loseWetRate * Time.deltaTime * protectedShelter;
         }
     }
 
@@ -416,55 +518,39 @@ public class Player : MonoBehaviour
             _inventorySystem.RemoveItem(materialToFeed, 1);
             if(materialToFeed == Materials.Wood)
             {
+                AudioManager.Instance.PlayFeedSound(.25f);
                 FireLife += 10;
+                SpeedOfParticles(Materials.Wood);
             }
             else if(materialToFeed == Materials.Grass)
             {
                 FireLife += 5;
+                AudioManager.Instance.PlayFeedSound(.125f);
+                SpeedOfParticles(Materials.Grass);
             }
-            AudioManager.Instance.PlayFeedSound();
-        }
-    }
-
-    private void FeedMeInput()
-    {
-        if (_inventorySystem.GetItemAmount(Materials.Wood) > 0)
-        {
-            FeedMe(Materials.Wood);
-        }
-        else if (_inventorySystem.GetItemAmount(Materials.Wood) > 0)
-        {
-            FeedMe(Materials.Grass);
-        }
-        else
-        {
-            GameManager.Instance.Ui.WarningText("No Fuel to Feed", 1f);
-            print("No Fuel to Feed");
         }
     }
 
     public void ButtonFeedMeWood()
     {
-        if (_inputStates == InputStates.Nothing)
+        if (_inputStates != InputStates.NearCampfire)
         {
             FeedMe(Materials.Wood);
-            SpeedOfParticles(Materials.Wood);
         }
     }
 
     public void ButtonFeedMeGrass()
     {
-        if (_inputStates == InputStates.Nothing)
+        if (_inputStates != InputStates.NearCampfire)
         {
             FeedMe(Materials.Grass);
-            SpeedOfParticles(Materials.Grass);
         }
     }
 
     private void SpeedOfParticles(Materials materialsToPlay)
     {
-        float velocity = 0;
-        float quantity = 0;
+        float velocity;
+        float quantity;
         if (materialsToPlay == Materials.Wood)
         {
             velocity = 1;
@@ -503,11 +589,10 @@ public class Player : MonoBehaviour
 
     private void OnCollisionEnter2D(Collision2D collision)
     {
-        Ice ice = collision.gameObject.GetComponent<Ice>();
-        if(ice != null)
+        if(collision.gameObject.TryGetComponent<Ice>(out var ice))
         {
             FireLife -= 5;
-            Wetness += 10;
+            Wetness += 20;
             ice.Die();
         }
     }
@@ -524,8 +609,7 @@ public class Player : MonoBehaviour
     {
         if (collision.CompareTag("Material"))
         {
-            MaterialItem itemNear = collision.GetComponent<MaterialItem>();
-            if (itemNear != null)
+            if (collision.TryGetComponent<MaterialItem>(out var itemNear))
             {
                 _materialNear = itemNear;
                 _inputStates = InputStates.NearMaterial;
@@ -534,9 +618,9 @@ public class Player : MonoBehaviour
         }
         else if (collision.CompareTag("Tree"))
         {
-            ChopTree treeNear = collision.GetComponent<ChopTree>();
-            if (treeNear == null)
+            if (!collision.TryGetComponent<ChopTree>(out var treeNear))
                 return;
+
             _treeNear = treeNear;
             _inputStates = InputStates.NearATree;
             SetOutlineOfInterectable(collision);
@@ -551,12 +635,6 @@ public class Player : MonoBehaviour
             _inputStates = InputStates.NearCraftingBench;
             SetOutlineOfInterectable(collision);
         }
-    }
-
-    private void SetNewOutline(OutLineWhenNear outLine)
-    {
-        _outlineNear.PlayerExit();
-        //_outlineNear = 
     }
 
     private void SetOutlineOfInterectable(Collider2D collision)

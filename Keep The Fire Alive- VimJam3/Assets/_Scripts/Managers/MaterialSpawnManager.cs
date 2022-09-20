@@ -21,12 +21,12 @@ public class MaterialSpawnManager : MonoBehaviour
         HandleSpawns();
     }
 
-    private void OnDrawGizmos()
-    {
-        //float xPosition = (-_cam.orthographicSize * _cam.aspect) - .25f + Random.Range(-.25f, .25f);
-        //float yPosition = Random.Range(-_cam.orthographicSize + 0.2f, _cam.orthographicSize - 0.2f);
-        //Gizmos.DrawCube(new Vector3(xPosition, yPosition), Vector3.one / 6);
-    }
+    //private void OnDrawGizmos()
+    //{
+    //    float xPosition = (-_cam.orthographicSize * _cam.aspect) - .25f + Random.Range(-.25f, .25f);
+    //    float yPosition = Random.Range(-_cam.orthographicSize + 0.2f, _cam.orthographicSize - 0.2f);
+    //    Gizmos.DrawCube(new Vector3(xPosition, yPosition), Vector3.one / 6);
+    //}
 
     private void HandleSpawns()
     {
@@ -38,12 +38,15 @@ public class MaterialSpawnManager : MonoBehaviour
             float whatToSpawn = Random.Range(0, 100);
             if (whatToSpawn <= 20)
                 whatToSpawn = 0;
-            else if (whatToSpawn <= 67.5f)
+            else if (whatToSpawn <= 80f)
                 whatToSpawn = 1;
             else if (whatToSpawn <= 100)
                 whatToSpawn = 2;
             float xPosition = (-_cam.orthographicSize * _cam.aspect) - 0.25f + Random.Range(-.25f, .25f);
-            float yPosition = Random.Range(-_cam.orthographicSize + 0.2f, _cam.orthographicSize - 0.2f);
+            float yPositive = Random.Range(0.25f,_cam.orthographicSize - 0.2f);
+            float yNegative = Random.Range(-0.25f,-_cam.orthographicSize + 0.2f);
+            float yPosition = Random.value > 0.5f ? yPositive : yNegative;
+
             Instantiate(_materials[(int)whatToSpawn], new Vector2(xPosition, yPosition), Quaternion.identity);
         }
     }

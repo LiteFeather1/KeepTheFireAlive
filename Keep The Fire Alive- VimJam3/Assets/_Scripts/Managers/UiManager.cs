@@ -3,12 +3,15 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 using TMPro;
+using UnityEngine.EventSystems;
 
 public class UiManager : MonoBehaviour
 {
     [Header("Screens")]
     [SerializeField] private GameObject _craftingScreen;
+    public bool GetCraftingScreenState =>_craftingScreen.activeInHierarchy;
     [SerializeField] private GameObject _pauseScreen;
+    [SerializeField] private GameObject _inventoryUi;
 
     [Header("PopUp Window")]
     [SerializeField] private RectTransform _popUpWindow;
@@ -30,7 +33,7 @@ public class UiManager : MonoBehaviour
 
     private void Update()
     {
-        if (Input.GetKeyDown(KeyCode.Escape))
+        if (Input.GetKeyDown(KeyCode.Return) || Input.GetKeyDown(KeyCode.KeypadEnter) || Input.GetKeyDown(KeyCode.E) || ((Input.GetKeyDown(KeyCode.Space) || Input.GetKeyDown(KeyCode.Mouse1)) && GetCraftingScreenState))
             if (_craftingScreen.activeInHierarchy)
             {
                 SwitchCraftingMenuActive();
@@ -61,7 +64,7 @@ public class UiManager : MonoBehaviour
 
     public void SwitchCraftingMenuActive()
     {
-        bool active = _craftingScreen.activeInHierarchy;
+        bool active = GetCraftingScreenState;
         _craftingScreen.SetActive(!active);
         _pauseScreen.SetActive(!active);
         if (!active)
@@ -115,7 +118,7 @@ public class UiManager : MonoBehaviour
     private IEnumerator ShowWarningText(float timeToShow)
     {
         _warningText.gameObject.SetActive(true);
-        yield return new WaitForSeconds(timeToShow);
+        yield return new WaitForSecondsRealtime(timeToShow);
         _warningText.gameObject.SetActive(false);
     }
 

@@ -4784,7 +4784,7 @@ ParticleSystemRenderer:
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: 0
   m_SortingLayer: 0
-  m_SortingOrder: 2
+  m_SortingOrder: 11
   m_RenderMode: 0
   m_MeshDistribution: 0
   m_SortMode: 0
@@ -4887,7 +4887,7 @@ SpriteRenderer:
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: 0
   m_SortingLayer: 0
-  m_SortingOrder: 1
+  m_SortingOrder: 10
   m_Sprite: {fileID: -743369358, guid: 6789a8c85c7c68b4e949983e61abc5b4, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
@@ -4988,7 +4988,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 247c407566884264290da569457d9773, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _hp: 6
+  _hp: 4
   _amountToSpawn: 3
   _woodPrefab: {fileID: 5406765462310543393, guid: 277037a43b68d364f93ee6242546840d, type: 3}
   _leaves: {fileID: 3499689058353303758}
@@ -5036,7 +5036,7 @@ SpriteRenderer:
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: 0
   m_SortingLayer: 0
-  m_SortingOrder: 0
+  m_SortingOrder: 9
   m_Sprite: {fileID: -602054908, guid: 6789a8c85c7c68b4e949983e61abc5b4, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0

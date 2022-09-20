@@ -8,13 +8,12 @@ public class RainManager : MonoBehaviour
     [Header("Rain")]
     [SerializeField] private float _timeToStartRaining = 180;
     [SerializeField] private float _rainingStrength = 1;
-    private bool _isRaining;
     private Action<float> _rainStarted;
     [SerializeField] private ParticleSystem _rainParticle;
 
     public Action<float> RainStarted { get => _rainStarted; set => _rainStarted = value; }
 
-    private static RainManager Instance => GameManager.Instance.RainManager;
+    public static RainManager Instance => GameManager.Instance.RainManager;
 
     private void Start()
     {

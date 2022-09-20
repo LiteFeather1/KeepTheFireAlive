@@ -68,7 +68,7 @@ public class Hand : MonoBehaviour
 
     private void CheckIfDespawn()
     {
-        if(Vector2.Distance(_position, _startPos) < 1f)
+        if(Vector2.Distance(_position, _startPos) < 1.5f)
         {
             if (_playerAbove || _fireStole) 
                 Destroy(gameObject);

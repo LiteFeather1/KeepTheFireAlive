@@ -8,7 +8,17 @@ public class InventoryPopUpText : MonoBehaviour, IPointerEnterHandler, IPointerE
     [SerializeField] private Player _player;
     [SerializeField] private Materials _material;
 
+    private void Start()
+    {
+        _player.InvetoryUi += UpdateText;
+    }
+
     public void OnPointerEnter(PointerEventData eventData)
+    {
+        UpdateText();
+    }
+
+    private void UpdateText()
     {
         GameManager.Instance.Ui.DisplayInventoryFeed(_player.InventoryPopUpText(_material));
     }

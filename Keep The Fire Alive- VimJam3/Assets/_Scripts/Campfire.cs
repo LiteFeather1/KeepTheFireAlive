@@ -45,7 +45,7 @@ public class Campfire : MonoBehaviour
                 UiManager.Instance.WarningText("Baby.. my fire is...", 3f, new Color32(200, 97, 80, 255));
                 _warned = true;
             }
-            else if (_life > 25 && !_warned)
+            else if (_life > 25 && _warned)
                 _warned = false;
         }
     }
@@ -59,13 +59,14 @@ public class Campfire : MonoBehaviour
 
     private void OnEnable()
     {
-        _gm = GameManager.Instance;
-        _gm.RainManager.RainStarted += IsRaining;
+        StartCoroutine(CO_OnEnable());
     }
 
-    private void Start()
+    IEnumerator CO_OnEnable()
     {
-
+        yield return new WaitForSeconds(1.25f);
+        _gm = GameManager.Instance;
+        _gm.RainManager.RainStarted += IsRaining;
     }
 
     private void Update()
@@ -190,14 +191,14 @@ public class Campfire : MonoBehaviour
         if(materialToFeed == Materials.Wood)
         {
             Life += 10;
+            AudioManager.Instance.PlayFeedSound(.25f);
         }
         else if(materialToFeed == Materials.Grass)
         {
             Life += 5f;
+            AudioManager.Instance.PlayFeedSound(.125f);
         }
-
         SpeedOfParticles(materialToFeed);
-        AudioManager.Instance.PlayFeedSound();
     }
 
 

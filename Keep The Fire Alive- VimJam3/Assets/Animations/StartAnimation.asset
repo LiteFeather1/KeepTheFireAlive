@@ -1,0 +1,25 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d607b2527154f1349b3ad17e543d9463, type: 3}
+  m_Name: StartAnimation
+  m_EditorClassIdentifier: 
+  _sprites:
+  - {fileID: 994580981, guid: 57901808027105e45bcfa461cc9f9df7, type: 3}
+  - {fileID: -625154771, guid: 57901808027105e45bcfa461cc9f9df7, type: 3}
+  - {fileID: 1076596539, guid: 57901808027105e45bcfa461cc9f9df7, type: 3}
+  - {fileID: -108182641, guid: 57901808027105e45bcfa461cc9f9df7, type: 3}
+  - {fileID: 1861483990, guid: 57901808027105e45bcfa461cc9f9df7, type: 3}
+  - {fileID: -1328887684, guid: 57901808027105e45bcfa461cc9f9df7, type: 3}
+  - {fileID: 959854887, guid: 57901808027105e45bcfa461cc9f9df7, type: 3}
+  - {fileID: -466861593, guid: 57901808027105e45bcfa461cc9f9df7, type: 3}
+  - {fileID: -792764221, guid: 57901808027105e45bcfa461cc9f9df7, type: 3}
+  _fps: 9

@@ -10,10 +10,10 @@ public class TreeSpawnManager : MonoBehaviour
     private float _timeToSpawn;
     private float _passingTime = 0;
     [SerializeField] private Transform[] _possiblePositions;
-    private List<Vector3> _positions = new();
+    private readonly List<Vector3> _positions = new();
     private Vector3 _boxSize =  new(.16f, .16f);
 
-    private static TreeSpawnManager Instance => GameManager.Instance.TreeSpawnManager;
+    public static TreeSpawnManager Instance => GameManager.Instance.TreeSpawnManager;
 
     private void Start()
     {
@@ -21,10 +21,6 @@ public class TreeSpawnManager : MonoBehaviour
         foreach (var item in _possiblePositions)
         {
             _positions.Add(item.position);
-        }
-        for (int i = 0; i < 1; i++)
-        {
-            SpawnTree();
         }
     }
 

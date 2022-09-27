@@ -56,7 +56,6 @@ public class Recipe : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler
         {
             RemoveMaterialsOfInventory(_items[i], _amountNecessary[i]);
         }
-        Debug.Log("Crafted");
         Time.timeScale = 1;
         AudioManager.Instance.PlayCraftedSound();
     }

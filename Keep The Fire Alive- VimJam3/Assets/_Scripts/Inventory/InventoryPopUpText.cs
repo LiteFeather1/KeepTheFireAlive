@@ -15,16 +15,22 @@ public class InventoryPopUpText : MonoBehaviour, IPointerEnterHandler, IPointerE
 
     public void OnPointerEnter(PointerEventData eventData)
     {
-        UpdateText();
+        UpdateText(_material);
     }
 
-    private void UpdateText()
+    private void UpdateText(Materials materials)
     {
-        GameManager.Instance.Ui.DisplayInventoryFeed(_player.InventoryPopUpText(_material));
+        if(IsMoveOverUi())
+            GameManager.Instance.Ui.DisplayInventoryFeed(_player.InventoryPopUpText(materials));
     }
 
     public void OnPointerExit(PointerEventData eventData)
     {
         GameManager.Instance.Ui.HideInventoryFeed();
+    }
+
+    private bool IsMoveOverUi()
+    {
+        return EventSystem.current.IsPointerOverGameObject();
     }
 }

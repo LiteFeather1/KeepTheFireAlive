@@ -1,4 +1,4 @@
-using System.Collections;
+    using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -102,11 +102,6 @@ public class ChopTree : MonoBehaviour
             yield return null;
         }
         transform.rotation = goal;
-    }
-
-    public bool Approximately(Quaternion quatA, Quaternion value, float acceptableRange)
-    {
-        return 1 - Mathf.Abs(Quaternion.Dot(quatA, value)) < acceptableRange;
     }
 
     private bool Compare(Quaternion quatA, Quaternion quatB , float range)

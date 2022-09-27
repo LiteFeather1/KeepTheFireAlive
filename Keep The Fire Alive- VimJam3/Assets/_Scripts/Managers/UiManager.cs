@@ -33,12 +33,15 @@ public class UiManager : MonoBehaviour
 
     private void Update()
     {
-        if (Input.GetKeyDown(KeyCode.Return) || Input.GetKeyDown(KeyCode.KeypadEnter) || Input.GetKeyDown(KeyCode.E) || ((Input.GetKeyDown(KeyCode.Space) || Input.GetKeyDown(KeyCode.Mouse1)) && GetCraftingScreenState))
+        if (Input.GetKeyDown(KeyCode.Return) || Input.GetKeyDown(KeyCode.Escape) || Input.GetKeyDown(KeyCode.KeypadEnter) || Input.GetKeyDown(KeyCode.E) || 
+            ((Input.GetKeyDown(KeyCode.Space) || Input.GetKeyDown(KeyCode.Mouse1)) && GetCraftingScreenState))
+        {
             if (_craftingScreen.activeInHierarchy)
             {
                 SwitchCraftingMenuActive();
                 DeactivatePopUpWindow();
                 Time.timeScale = 1;
+
             }
             else
             {
@@ -50,10 +53,13 @@ public class UiManager : MonoBehaviour
                 else
                 {
                     Time.timeScale = 1;
-                    _pauseScreen.SetActive(false);;
+                    _pauseScreen.SetActive(false); ;
                 }
             }
+           
+        }
     }
+
 
     public void TimeToDisplay(float time)
     {

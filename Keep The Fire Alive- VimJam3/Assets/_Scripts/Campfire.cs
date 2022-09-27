@@ -42,7 +42,7 @@ public class Campfire : MonoBehaviour
             _life = Mathf.Clamp(value, 0, 125f);
             if (_life <= 25 && !_warned)
             {
-                UiManager.Instance.WarningText("Baby.. my fire is...", 3f, new Color32(200, 97, 80, 255));
+                UiManager.Instance.WarningText("Mom's fire is getting low...", 3f, new Color32(200, 97, 80, 255));
                 _warned = true;
             }
             else if (_life > 25 && _warned)
@@ -190,12 +190,17 @@ public class Campfire : MonoBehaviour
     {
         if(materialToFeed == Materials.Wood)
         {
-            Life += 10;
+            Life += 15;
             AudioManager.Instance.PlayFeedSound(.25f);
+        }
+        if (materialToFeed == Materials.Stone)
+        {
+            Life -= 10;
+            UiManager.Instance.WarningText("That felt bad baby! What is that?!", 2f, Color.grey);
         }
         else if(materialToFeed == Materials.Grass)
         {
-            Life += 5f;
+            Life += 10f;
             AudioManager.Instance.PlayFeedSound(.125f);
         }
         SpeedOfParticles(materialToFeed);
@@ -204,28 +209,15 @@ public class Campfire : MonoBehaviour
 
     private void SpeedOfParticles(Materials materialsToPlay)
     {
-        float velocity;
-        switch (_fireState)
+        float velocity = _fireState switch
         {
-            case FireState.Big:
-                velocity = 1;
-                break;
-            case FireState.Medium:
-                velocity = .75f;
-                break;
-            case FireState.Small:
-                velocity = .5f;
-                break;
-            case FireState.AlmostDead:
-                velocity = .25f;
-                break;
-            case FireState.Dead:
-                velocity = .0f;
-                break;
-            default:
-                velocity = .0f;
-                break;
-        }
+            FireState.Big => 1,
+            FireState.Medium => .75f,
+            FireState.Small => .5f,
+            FireState.AlmostDead => .25f,
+            FireState.Dead => .0f,
+            _ => .0f,
+        };
         var velocityModule = _feedParticle.velocityOverLifetime;
         velocityModule.speedModifier = velocity;
 

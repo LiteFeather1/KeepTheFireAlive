@@ -9,6 +9,7 @@ TagManager:
   - Material
   - Tree
   - Shack
+  - UiInventory
   layers:
   - Default
   - TransparentFX

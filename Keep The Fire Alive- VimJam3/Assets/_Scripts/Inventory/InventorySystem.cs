@@ -21,12 +21,6 @@ public class InventorySystem : MonoBehaviour
         InitInventory();
     }
 
-    private void Update()
-    {
-        if (Input.GetKeyDown(KeyCode.Alpha1))
-            AddItem(Materials.Wood, 1);
-    }
-
     private void InitInventory()
     {
         _inventory = new();

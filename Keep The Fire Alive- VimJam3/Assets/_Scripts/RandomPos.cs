@@ -5,7 +5,7 @@ using UnityEngine;
 public class RandomPos : MonoBehaviour
 {
     [SerializeField] private Collider2D _collisionCollider;
-    private readonly float _timeToDisable = .75f;
+    private float _timeToDisable = .4f;
     private float _elapsedTime;
 
     void Start()
@@ -30,6 +30,7 @@ public class RandomPos : MonoBehaviour
         float width = height / 9 * 16;
 
         transform.position = new Vector2(Random.Range(-width, width - (Random.Range(-.5f, -.25f))), Random.Range(-height, height));
+        _timeToDisable += 0.1f;
     }
 
     private void OnTriggerEnter2D(Collider2D collision)

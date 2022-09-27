@@ -53,8 +53,10 @@ public class AudioManager : MonoBehaviour
 
     public void PlaySound(AudioClip clip)
     {
-        if (clip != null)
-            _effectSound.PlayOneShot(clip);
+        if (clip != null) ;
+        //#if UNITY_EDITOR
+        //            _effectSound.PlayOneShot(clip);
+        //#endif
         else
             print("Sound was null");
     }

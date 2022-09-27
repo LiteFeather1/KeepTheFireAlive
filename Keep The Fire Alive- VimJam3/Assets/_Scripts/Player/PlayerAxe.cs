@@ -36,7 +36,6 @@ public class PlayerAxe : MonoBehaviour
             {
                 BreakAxe();
             }
-            print("AxeSwong");
         }
     }
 

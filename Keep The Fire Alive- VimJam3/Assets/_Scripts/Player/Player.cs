@@ -24,12 +24,15 @@ public class Player : MonoBehaviour
     [Header("Equipeables")]
     [SerializeField] private InputStates _inputStates;
     private InputStates _previousInputState;
-    private System.Action _invetoryUi;
+    private System.Action<Materials> _invetoryUi;
+    private Materials _currentMaterialsToDisplay;
     [SerializeField] private PlayerAxe _playerAxe;
     [SerializeField] private PlayerHat _playerHat;
 
     [Header("Interactables")]
     private MaterialItem _materialNear;
+    private float _elapsedPickUpTime;
+    private readonly float _timeToPickUp = 0.125f;
     private ChopTree _treeNear;
     private bool _axing;
     private OutLineWhenNear _outlineNear;
@@ -43,6 +46,8 @@ public class Player : MonoBehaviour
     [SerializeField] private Animator _leafAc;
     [SerializeField] private SpriteRenderer _leafSR;
     [SerializeField] private ParticleSystem _feedParticle;
+    [SerializeField] private LightOuterRadioustLerpAnimation _myLight;
+    [SerializeField] private LightIntensityRadious _light;
 
     [Header("AudioClips")]
     [SerializeField] private AudioClip _grassWalking;
@@ -74,7 +79,7 @@ public class Player : MonoBehaviour
             GameManager.Instance.Ui.FireFireDisplay(FireLife);
             if (_fireLife <= 25 && !_warned)
             {
-                UiManager.Instance.WarningText("My fire is getting low!", 2f, new Color32(200, 97, 80, 255));
+                UiManager.Instance.WarningText("Baby fire is getting low...", 2f, new Color32(200, 97, 80, 255));
                 _warned = true;
             }
             else if (_fireLife > 25 && _warned)
@@ -99,7 +104,7 @@ public class Player : MonoBehaviour
         }
     }
 
-    public Action InvetoryUi { get => _invetoryUi; set => _invetoryUi = value; }
+    public Action<Materials> InvetoryUi { get => _invetoryUi; set => _invetoryUi = value; }
 
     private void Awake()
     {
@@ -130,6 +135,9 @@ public class Player : MonoBehaviour
         DepleteFire();
         Limit();
         DepleteWetness();
+        PickUpTime();
+        _myLight.LerpAnimation(_fireLife);
+        _light.UpdateIntensity(_fireLife);
         if (Input.GetKeyDown(KeyCode.Return) || Input.GetKeyDown(KeyCode.KeypadEnter) && _axing)
             ShowLeaf();
         EventFromMotherToMeAndVersa();
@@ -199,8 +207,8 @@ public class Player : MonoBehaviour
 
     private void Inputs()
     {
-        if (Input.GetKeyDown(KeyCode.Space) || Input.GetKeyDown(KeyCode.Mouse0))
-
+        //InteractInput
+        if (Input.GetKey(KeyCode.Space) || Input.GetKey(KeyCode.Mouse0))
         {
             InputAction();
         }
@@ -218,7 +226,7 @@ public class Player : MonoBehaviour
         }
         else if(Input.GetKeyDown(KeyCode.Alpha2))
         {
-            if (!_dislayingCantEat)
+            if (!_displayCantEat)
                 StartCoroutine(CantEatRocks());
         }
         else  if(Input.GetKeyDown(KeyCode.Alpha3))
@@ -234,14 +242,16 @@ public class Player : MonoBehaviour
         }
     }
 
-    private bool _dislayingCantEat;
+    //private void Flickin
+
+    private bool _displayCantEat;
     private IEnumerator CantEatRocks()
     {
-        _dislayingCantEat = true;
+        _displayCantEat = true;
         UiManager.Instance.DisplayInventoryFeed(InventoryPopUpText(Materials.Stone));
         yield return new WaitForSeconds(1f);
         UiManager.Instance.HideInventoryFeed();
-        _dislayingCantEat = false;
+        _displayCantEat = false;
     }
 
     private void InputAction()
@@ -258,6 +268,7 @@ public class Player : MonoBehaviour
                 //FeedCampfireInput();
                 break;
             case InputStates.NearCraftingBench:
+                if(Input.GetKeyDown(KeyCode.Space))
                 GameManager.Instance.Ui.SwitchCraftingMenuActive();
                 break;
             case InputStates.Nothing:
@@ -285,20 +296,28 @@ public class Player : MonoBehaviour
     {
         if (_inputStates == InputStates.Nothing && _previousInputState == InputStates.NearCampfire)
         {
-            print("invoked");
-            _invetoryUi?.Invoke();
+            _invetoryUi?.Invoke(_currentMaterialsToDisplay);
         }
         else if (_inputStates == InputStates.NearCampfire && _previousInputState == InputStates.Nothing)
         {
-            print("invoked");
-            _invetoryUi?.Invoke();
+            _invetoryUi?.Invoke(_currentMaterialsToDisplay);
         }
     }
 
     private void CollectMaterial()
     {
-        if (_materialNear != null)
+        if (_materialNear != null && _elapsedPickUpTime >= _timeToPickUp)
+        {
+            _elapsedPickUpTime = 0;
+            Flip(-(transform.position.x - _materialNear.transform.position.x));
             _materialNear.Collect();
+        }
+    }
+
+    private void PickUpTime()
+    {
+        if (_elapsedPickUpTime <= _timeToPickUp)
+            _elapsedPickUpTime += Time.deltaTime;
     }
 
     private void SwingAxe()
@@ -313,7 +332,6 @@ public class Player : MonoBehaviour
         else
         {
             GameManager.Instance.Ui.WarningText("You need a Axe For that!", 1);
-            print("No Axe");
         }
     }
 
@@ -327,6 +345,8 @@ public class Player : MonoBehaviour
 
     private void PlayAnimation()
     {
+        if (_treeNear != null)
+            Flip(-(transform.position.x - _treeNear.transform.position.x));
         _axing = true;
         _rb.velocity = Vector2.zero;
         _ac.SetBool("Axe", _axing);
@@ -376,6 +396,7 @@ public class Player : MonoBehaviour
         {
             _inventorySystem.RemoveItem(materialToFeed, 1);
             _campfire.FeedMe(materialToFeed);
+            Flip(-(transform.position.x - _campfire.transform.position.x));
         }
     }
 
@@ -383,6 +404,12 @@ public class Player : MonoBehaviour
     {
         if (_inputStates == InputStates.NearCampfire)
             FeedCampfireMaterial(Materials.Wood);
+    }
+
+    public void ButtonFeedCampfireStone()
+    {
+        if (_inputStates == InputStates.NearCampfire)
+            FeedCampfireMaterial(Materials.Stone);
     }
 
     public void ButtonFeedCampfireGrass()
@@ -395,41 +422,64 @@ public class Player : MonoBehaviour
     {
         if(_inputStates == InputStates.NearCampfire)
         {
-            if (material != Materials.Stone)
+            if (material == Materials.Wood || material == Materials.Grass)
             {
                 if (_inventorySystem.GetItemAmount(material) > 0)
+                {
+                    _currentMaterialsToDisplay = material;
                     return $"Feed Mom {material}?";
+                }
                 else
+                {
+                    _currentMaterialsToDisplay = material;
                     return "";
-
+                }
             }
             else if(material == Materials.Stone)
             {
                 if (_inventorySystem.GetItemAmount(material) > 0)
+                {
+                    _currentMaterialsToDisplay = material;
                     return "I can't feed Mom stones!";
+                }
                 else
+                {
+                    _currentMaterialsToDisplay = material;
                     return "";
+                }
             }
         }
-        else if (_inputStates == InputStates.Nothing)
+        else
         {
-            if (material != Materials.Stone)
+            if (material == Materials.Wood || material == Materials.Grass)
             {
                 if (_inventorySystem.GetItemAmount(material) > 0)
+                {
+                    _currentMaterialsToDisplay = material;
                     return $"Eat {material}?";
+                }
                 else
+                {
+                    _currentMaterialsToDisplay = material;
                     return "";
+                }
 
             }
             else if (material == Materials.Stone)
             {
                 if (_inventorySystem.GetItemAmount(material) > 0)
+                {
+                    _currentMaterialsToDisplay = material;
                     return "I can't eat stones!";
+                }
                 else
+                {
+                    _currentMaterialsToDisplay = material;
                     return "";
+                }
             }
         }
-        return "";
+        return "lol";
     }
 
     public void SetIsolation(float isolation)
@@ -470,7 +520,7 @@ public class Player : MonoBehaviour
     {
         if (FireLife <= 0)
         {
-            Die("The fire depleted you", "Your fire went out!");
+            Die("The fire depleted you", "Baby fire went out!");
         }
     }
 
@@ -522,6 +572,11 @@ public class Player : MonoBehaviour
                 FireLife += 10;
                 SpeedOfParticles(Materials.Wood);
             }
+            else if (materialToFeed == Materials.Stone)
+            {
+                FireLife -= 10;
+                UiManager.Instance.WarningText("These grey things taste super bad yuck!", 2f, Color.grey);
+            }
             else if(materialToFeed == Materials.Grass)
             {
                 FireLife += 5;
@@ -536,6 +591,14 @@ public class Player : MonoBehaviour
         if (_inputStates != InputStates.NearCampfire)
         {
             FeedMe(Materials.Wood);
+        }
+    }
+
+    public void ButtonFeedMeStone()
+    {
+        if (_inputStates != InputStates.NearCampfire)
+        {
+            FeedMe(Materials.Stone);
         }
     }
 

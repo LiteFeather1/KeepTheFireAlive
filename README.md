@@ -1,2 +1,2 @@
 # KeepTheFireAlive
- For the vimjam 3
+ Game made together with @ilymeiib for the vimjam 3

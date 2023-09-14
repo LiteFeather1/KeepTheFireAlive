@@ -4988,7 +4988,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 247c407566884264290da569457d9773, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _hp: 4
+  _hp: 3
   _amountToSpawn: 3
   _woodPrefab: {fileID: 5406765462310543393, guid: 277037a43b68d364f93ee6242546840d, type: 3}
   _leaves: {fileID: 3499689058353303758}

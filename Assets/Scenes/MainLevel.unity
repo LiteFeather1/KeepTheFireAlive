@@ -5823,7 +5823,7 @@ RectTransform:
   - {fileID: 659498144}
   - {fileID: 1935531905}
   m_Father: {fileID: 2108517637}
-  m_RootOrder: 4
+  m_RootOrder: 3
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
@@ -6626,7 +6626,7 @@ RectTransform:
   m_Children:
   - {fileID: 701803789}
   m_Father: {fileID: 2108517637}
-  m_RootOrder: 0
+  m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 1, y: 0.5}
   m_AnchorMax: {x: 1, y: 0.5}
@@ -7466,7 +7466,7 @@ AudioSource:
   OutputAudioMixerGroup: {fileID: 0}
   m_audioClip: {fileID: 0}
   m_PlayOnAwake: 1
-  m_Volume: 0.125
+  m_Volume: 0.33
   m_Pitch: 1
   Loop: 0
   Mute: 0
@@ -13398,7 +13398,7 @@ RectTransform:
   - {fileID: 1006863754}
   - {fileID: 1555807851}
   m_Father: {fileID: 2108517637}
-  m_RootOrder: 1
+  m_RootOrder: 2
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 1, y: 0}
   m_AnchorMax: {x: 1, y: 0}
@@ -13545,8 +13545,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ac6f2d10c1e3f9445a7f6b022015cf03, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _items: 0000000001000000
-  _amountNecessary: 0300000002000000
+  _items: 000000000100000002000000
+  _amountNecessary: 020000000100000001000000
   _description: A Umbrella to Fully protocted against the rain
   _button: {fileID: 631577166}
   _icon: {fileID: 54952942}
@@ -19686,7 +19686,7 @@ RectTransform:
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 2108517637}
-  m_RootOrder: 2
+  m_RootOrder: 4
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0}
   m_AnchorMax: {x: 0.5, y: 0}
@@ -20600,7 +20600,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _items: 02000000
-  _amountNecessary: 05000000
+  _amountNecessary: 03000000
   _description: A Umbrella to Partially protocted against the rain
   _button: {fileID: 1006695730}
   _icon: {fileID: 1531478426}
@@ -21977,7 +21977,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _speed: 1.5
   _fireLife: 100
-  _depleteRate: 1.2
+  _depleteRate: 1.1
   _wetness: 0
   _isolationStrength: 1
   _loseWetRate: 2
@@ -28095,7 +28095,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _items: 000000000200000001000000
-  _amountNecessary: 030000000200000001000000
+  _amountNecessary: 020000000100000001000000
   _description: A Fence to stop those Kamikaze Snow Balls
   _button: {fileID: 1449027340}
   _icon: {fileID: 481052439}
@@ -29922,7 +29922,7 @@ RectTransform:
   - {fileID: 2070562436}
   - {fileID: 1394145339}
   m_Father: {fileID: 2108517637}
-  m_RootOrder: 3
+  m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 1}
   m_AnchorMax: {x: 0.5, y: 1}
@@ -30284,7 +30284,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _life: 100
-  _depleteRate: 1.1
+  _depleteRate: 1.05
   _bigLight: {fileID: 565505315}
   _bigRadiousPerState:
   - 3.6
@@ -30447,7 +30447,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _items: 0000000002000000
-  _amountNecessary: 0100000003000000
+  _amountNecessary: 0100000002000000
   _description: A Torch that keeps those Thiefy Hands always!
   _button: {fileID: 1832950241}
   _icon: {fileID: 372933562}
@@ -41342,11 +41342,11 @@ RectTransform:
   m_LocalScale: {x: 0, y: 0, z: 0}
   m_ConstrainProportionsScale: 0
   m_Children:
+  - {fileID: 1743912170}
   - {fileID: 445019616}
   - {fileID: 625284114}
-  - {fileID: 842785742}
-  - {fileID: 1743912170}
   - {fileID: 201574354}
+  - {fileID: 842785742}
   - {fileID: 1996845406}
   m_Father: {fileID: 0}
   m_RootOrder: 5

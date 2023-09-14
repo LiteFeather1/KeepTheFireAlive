@@ -67,7 +67,7 @@ public class ChopTree : MonoBehaviour
     {
         float rotationGoal;
         Quaternion goal;
-        float time ;
+        float time;
         float minRotation = 1.41875f;
         float maxRotation = 2.8375f;
         for (int i = 0; i < 3; i++)
@@ -104,8 +104,8 @@ public class ChopTree : MonoBehaviour
         transform.rotation = goal;
     }
 
-    private bool Compare(Quaternion quatA, Quaternion quatB , float range)
+    private bool Compare(Quaternion quatA, Quaternion quatB, float range)
     {
         return Quaternion.Angle(quatA, quatB) < range;
-}
+    }
 }

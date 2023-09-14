@@ -129,7 +129,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5cdfa0afd9f530845a4ba91663537074, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _hitsToDie: 4
+  _hitsToDie: 6
   _collider: {fileID: 771481095915772283}
   _colliderRadious:
   - 1
